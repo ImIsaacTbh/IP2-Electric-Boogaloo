@@ -1,13 +1,29 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Assets;
 using UnityEngine;
 
 public class GlobalController : MonoBehaviour
 {
     public static GlobalController instance;
-    
+    public Events Events = new Events();
+    //Central Game Controls
+    [Header("Central Controls")] 
+    public float _centralTickRate = 60f;
+    public bool _isGamePaused;
+
+    [Header("Wave Controls")]
+    public bool _isWaveInProgress;
+
     //Tracking variables
-    public static bool isWaveInProgress;
+    public static float _timeSinceLastCentralTick;
+
+    //Tracking Methods
+    public bool IsWaveInProgress()
+    {
+        return instance._isWaveInProgress;
+    }
     void Awake()
     {
         if (instance == null)
@@ -22,6 +38,10 @@ public class GlobalController : MonoBehaviour
     }
     void Update()
     {
-        
+        _timeSinceLastCentralTick += Time.deltaTime;
+        if (_timeSinceLastCentralTick > 1 / _centralTickRate)
+        {
+            Events.SendCentralTick(EventArgs.Empty);
+        }
     }
 }
