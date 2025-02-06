@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class GlobalController : MonoBehaviour
 {
-    public static GlobalController instance;
+    public static GlobalController instance = null;
     public Events Events = new Events();
 
     //Central Game Controls
@@ -41,7 +41,7 @@ public class GlobalController : MonoBehaviour
     }
     void Start()
     {
-        
+        Debug.Log("Started Central Controller");
     }
     void Update()
     {

@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace Assets.Tower.Scripts
+namespace Assets.Enemy.Scripts
 {
-    public abstract class Tower : MonoBehaviour
+    public abstract class Enemy : MonoBehaviour
     {
         public GlobalController _controller = GlobalController.instance;
 
@@ -16,16 +16,13 @@ namespace Assets.Tower.Scripts
         public abstract int Damage { get; set; }
         public abstract float Range { get; set; }
         public abstract float AttackSpeed { get; set; }
-        public abstract float ProjectileSpeed { get; set; }
-        public abstract float ProjectileSize { get; set; }
-        public abstract float ProjectileLifetime { get; set; }
 
         public void Start()
         {
-            _controller.Events.TowerTick += OnTowerTick;
+            _controller.Events.EnemyTick += OnEnemyTick;
         }
 
-        public void OnTowerTick(object sender, EventArgs e)
+        public void OnEnemyTick(object sender, EventArgs e)
         {
             
         }

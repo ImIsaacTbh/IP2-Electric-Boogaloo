@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Assets
 {
@@ -29,10 +30,17 @@ namespace Assets
         {
             WaveStart?.Invoke(this, e);
         }
+
         public event EventHandler WaveEnd;
         public virtual void SendWaveEnd(EventArgs e)
         {
             WaveEnd?.Invoke(this, e);
+        }
+
+        public event EventHandler<Vector3> EnemyTarget;
+        public virtual void SendEnemyTarget(Vector3 e)
+        {
+            EnemyTarget?.Invoke(this, e);
         }
     }
 }
