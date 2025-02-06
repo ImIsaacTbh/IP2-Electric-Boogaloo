@@ -14,9 +14,25 @@ namespace Assets
             CentralTick?.Invoke(this, e);
         }
         public event EventHandler TowerTick;
+        public virtual void SendTowerTick(EventArgs e)
+        {
+            TowerTick?.Invoke(this, e);
+        }
         public event EventHandler EnemyTick;
+        public virtual void SendEnemyTick(EventArgs e)
+        {
+            EnemyTick?.Invoke(this, e);
+        }
 
         public event EventHandler WaveStart;
+        public virtual void SendWaveStart(EventArgs e)
+        {
+            WaveStart?.Invoke(this, e);
+        }
         public event EventHandler WaveEnd;
+        public virtual void SendWaveEnd(EventArgs e)
+        {
+            WaveEnd?.Invoke(this, e);
+        }
     }
 }

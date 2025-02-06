@@ -10,21 +10,19 @@ namespace Assets
     public class TowerController : MonoBehaviour
     {
         public GlobalController _controller = GlobalController.instance;
+        public float _timeSinceLastTowerTick = 0f;
 
         void Awake()
         {
-            _controller.Events.TowerTick += OnTowerTick;
+            _controller.Events.CentralTick += OnCentralTick;
         }
 
-        public void OnTowerTick(object sender, EventArgs e)
+        public void OnCentralTick(object sender, EventArgs e)
         {
-            if (_controller._isGamePaused)
+            _timeSinceLastTowerTick += Time.deltaTime;
+            if (_controller.IsWaveInProgress() && _timeSinceLastTowerTick > 1/_controller._towerTickRate)
             {
-                return;
-            }
-            if (_controller.IsWaveInProgress())
-            {
-                //Do tower stuff
+                _controller.Events.SendTowerTick(EventArgs.Empty);
             }
         }
     }

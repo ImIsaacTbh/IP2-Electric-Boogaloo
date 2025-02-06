@@ -8,6 +8,7 @@ public class GlobalController : MonoBehaviour
 {
     public static GlobalController instance;
     public Events Events = new Events();
+
     //Central Game Controls
     [Header("Central Controls")] 
     public float _centralTickRate = 60f;
@@ -15,6 +16,12 @@ public class GlobalController : MonoBehaviour
 
     [Header("Wave Controls")]
     public bool _isWaveInProgress;
+
+    [Header("Tower Controls")]
+    public float _towerTickRate = 60f;
+
+    [Header("Enemy Controls")]
+    public float _enemyTickRate = 30f;
 
     //Tracking variables
     public static float _timeSinceLastCentralTick;
