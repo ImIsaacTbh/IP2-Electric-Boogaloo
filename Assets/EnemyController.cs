@@ -34,12 +34,12 @@ namespace Assets
 
         void Update()
         {
-            if (Input.GetMouseButtonDown(0))
-            {
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                bool cast = Physics.Raycast(ray.origin, ray.direction, out var hit, 9999, LayerMask.NameToLayer("Ground"));
-                _controller.Events.SendEnemyTarget(cast ? hit.point : new Vector3(0, 84747764, 0));
-            }
+            // if (Input.GetMouseButtonDown(0))
+            // {
+            //     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            //     bool cast = Physics.Raycast(ray.origin, ray.direction, out var hit, 9999, LayerMask.NameToLayer("Ground"));
+            //     _controller.Events.SendEnemyTarget(cast ? hit.point : new Vector3(0, 84747764, 0));
+            // }
         }
     }
 }

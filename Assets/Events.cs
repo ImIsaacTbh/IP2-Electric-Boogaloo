@@ -25,6 +25,12 @@ namespace Assets
             EnemyTick?.Invoke(this, e);
         }
 
+        public event EventHandler<KeyValuePair<int, Vector3>> EnemyTargetSpecific;
+
+        public virtual void SendEnemyTargetSpecific(int id, Vector3 targetPos)
+        {
+            EnemyTargetSpecific?.Invoke(this, new KeyValuePair<int, Vector3>(id, targetPos));
+        }
         public event EventHandler WaveStart;
         public virtual void SendWaveStart(EventArgs e)
         {

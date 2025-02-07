@@ -46,7 +46,7 @@ public class GlobalController : MonoBehaviour
     void Update()
     {
         _timeSinceLastCentralTick += Time.deltaTime;
-        if (_timeSinceLastCentralTick > 1 / _centralTickRate)
+        if (!_isGamePaused && _timeSinceLastCentralTick > 1 / _centralTickRate)
         {
             Events.SendCentralTick(EventArgs.Empty);
         }
