@@ -10,14 +10,14 @@ namespace Assets.Enemy.Scripts.EnemyExample
 {
     public class ExEnemy : Enemy
     {
-        public override string Name { get; set; }
-        public override int Cost { get; set; }
-        public override int Damage { get; set; }
-        public override float Range { get; set; }
-        public override float AttackSpeed { get; set; }
+        public override string Name { get; set; } = "ExampleEnemy";
+        public override int Cost { get; set; } = 1;
+        public override int Damage { get; set; } = 5;
+        public override float Range { get; set; } = 0;
+        public override float AttackSpeed { get; set; } = 0;
 
         private int currentCp = 1;
-        
+
         public void Start()
         {
             _controller = GlobalController.instance;
@@ -48,11 +48,20 @@ namespace Assets.Enemy.Scripts.EnemyExample
 
         public void OnTriggerEnter(Collider other)
         {
+            
             if (other.gameObject.CompareTag("Checkpoint"))
             {
-                GetComponent<NavMeshAgent>().destination = other.transform.parent
-                    .GetChild(int.Parse(other.gameObject.name)).transform.position;
+                try
+                {
+                    GetComponent<NavMeshAgent>().destination = other.transform.parent
+                        .GetChild(int.Parse(other.gameObject.name)).transform.position;
+                }
+                catch {
+                    Debug.LogWarning("Something brokeded lmao");
+                }
             }
+            base.OnTriggerEnter(other);
+
         }
     }
 }

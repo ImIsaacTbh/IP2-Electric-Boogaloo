@@ -26,5 +26,14 @@ namespace Assets.Enemy.Scripts
         {
             
         }
+
+        public void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("EnemyKillVolume"))
+            {
+                Destroy(this.gameObject);
+                _controller.Events.SendEnemyCompletedPath(Cost);
+            }
+        }
     }
 }

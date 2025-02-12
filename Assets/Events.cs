@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
 namespace Assets
@@ -47,6 +48,12 @@ namespace Assets
         public virtual void SendEnemyTarget(Vector3 e)
         {
             EnemyTarget?.Invoke(this, e);
+        }
+        public event EventHandler<int> EnemyCompletedPath;
+        public virtual void SendEnemyCompletedPath(int cost)
+        {
+            EnemyCompletedPath?.Invoke(this, cost);
+            Debug.Log($"Enemy with cost of: {cost}, completed the path.");
         }
     }
 }
