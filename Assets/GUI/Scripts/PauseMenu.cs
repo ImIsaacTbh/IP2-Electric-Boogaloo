@@ -7,7 +7,7 @@ public class PauseMenu : MonoBehaviour
     GlobalController _controller;
 
     public string mainMenuName;
-    public bool isPaused;
+    //public bool isPaused;
     public GameObject pauseScreen;
 
     public static PauseMenu instance;
@@ -30,10 +30,10 @@ public class PauseMenu : MonoBehaviour
 
     public void PauseUnPause()
     {
-        if (isPaused)
+        if (_controller._isGamePaused)
         {
-            
-            isPaused = false;
+
+            _controller._isGamePaused = false;
             pauseScreen.SetActive(false);
             Cursor.lockState = CursorLockMode.Locked;//locks cursor if game is unpaused
             Cursor.visible = false;//hides pause menu
@@ -41,7 +41,7 @@ public class PauseMenu : MonoBehaviour
         }
         else
         {
-            isPaused = true;
+            _controller._isGamePaused = true;
             pauseScreen.SetActive(true);//shows pause menu
             Cursor.visible = true;
             _controller.Events.SendPause(EventArgs.Empty);

@@ -1,21 +1,22 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class GooberSpawnerTEST : MonoBehaviour
+namespace Assets
 {
-    public GameObject gooberPrefab;
-
-    private int shpeeeeed = 0;
-    private void FixedUpdate()
+    public class GooberSpawnerTEST : MonoBehaviour
     {
-        shpeeeeed++;
-        if (shpeeeeed == 10)
+        public GameObject gooberPrefab;
+
+        private int shpeeeeed = 0;
+
+        private void FixedUpdate()
         {
-            shpeeeeed = 0;
-            Instantiate(gooberPrefab).transform.position = transform.position;
-            
+            shpeeeeed++;
+            if (shpeeeeed == 1)
+            {
+                shpeeeeed = 0;
+                Instantiate(gooberPrefab).transform.position = transform.position;
+
+            }
         }
     }
 }

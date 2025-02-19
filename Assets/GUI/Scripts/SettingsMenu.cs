@@ -4,7 +4,9 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 
-public class SettingsMenu : MonoBehaviour { 
+public class SettingsMenu : MonoBehaviour
+{
+    private GlobalController _controller;
     public AudioMixer audioMixer;
     public Dropdown resolutionDropdown;
 
@@ -12,6 +14,7 @@ public class SettingsMenu : MonoBehaviour {
     //finds and adds your native and all possuble resolutions to the dropdown
     private void Start()
     {
+        _controller = GlobalController.instance;
        resolutions = Screen.resolutions;
 
         resolutionDropdown.ClearOptions();//clears preset dropdown options
@@ -36,7 +39,8 @@ public class SettingsMenu : MonoBehaviour {
 
     public void SetVolume(float volume)
         //voume controll
-    {
+    {  
+        _controller.volume = volume;
         audioMixer.SetFloat("Volume", volume);
     }
 
@@ -44,6 +48,7 @@ public class SettingsMenu : MonoBehaviour {
         //sets full screem
     {
         Screen.fullScreen = isFullscreen;
+        _controller.isFullscreen = isFullscreen;
     }
 
     public void SetResolution(int resolutionIndex)
@@ -51,6 +56,7 @@ public class SettingsMenu : MonoBehaviour {
         //sets the resolution to the one you picked
         Resolution resolution = resolutions[resolutionIndex];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+        _controller.resolution = resolution;
     }
 }
 

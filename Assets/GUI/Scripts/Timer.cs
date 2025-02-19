@@ -6,19 +6,20 @@ using TMPro;
 
 public class Timer : MonoBehaviour
 {
-
+    GlobalController _controller;
     public float timeRemaining = 0;
     public bool timeIsRunning = true;
     public TMP_Text timeText;
     void Start()
     {
+        _controller = GlobalController.instance;
         timeIsRunning = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (PauseMenu.instance.isPaused == false) //if paused pause timer
+        if (_controller._isGamePaused == false) //if paused pause timer
         {
             if (timeIsRunning)
             {
