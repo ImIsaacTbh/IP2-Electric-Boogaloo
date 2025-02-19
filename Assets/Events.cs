@@ -55,5 +55,16 @@ namespace Assets
             EnemyCompletedPath?.Invoke(this, cost);
             Debug.Log($"Enemy with cost of: {cost}, completed the path.");
         }
+
+        public event EventHandler Pause;
+        public virtual void SendPause(EventArgs e)
+        {
+            Pause?.Invoke(this, e);
+        }
+        public event EventHandler UnPause;
+        public virtual void SendUnPause(EventArgs e)
+        {
+            UnPause?.Invoke(this, e);
+        }
     }
 }

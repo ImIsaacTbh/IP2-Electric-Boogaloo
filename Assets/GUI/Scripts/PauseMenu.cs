@@ -1,24 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
+    GlobalController _controller;
+
     public string mainMenuName;
     public bool isPaused;
     public GameObject pauseScreen;
 
     public static PauseMenu instance;
 
-    private void Awake() //makes this reusable in other scripts to pause there code
-    {
-        instance = this;
-    }
-
     void Start()
     {
-        
+        instance = this;
+        _controller = GlobalController.instance;
     }
 
     void Update()
@@ -40,17 +37,19 @@ public class PauseMenu : MonoBehaviour
             pauseScreen.SetActive(false);
             Cursor.lockState = CursorLockMode.Locked;//locks cursor if game is unpaused
             Cursor.visible = false;//hides pause menu
+            _controller.Events.SendUnPause(EventArgs.Empty);
         }
         else
         {
-            Cursor.lockState = CursorLockMode.None;//unlocks cursor if game is paused
             isPaused = true;
             pauseScreen.SetActive(true);//shows pause menu
-            Cursor.visible = true;  
+            Cursor.visible = true;
+            _controller.Events.SendPause(EventArgs.Empty);
         }
     }
     public void MainMenu()
     {
+        Debug.Log("did thing");
         //loads main menu scene
         SceneManager.LoadScene(mainMenuName);
     }

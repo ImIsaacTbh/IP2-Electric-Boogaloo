@@ -717,6 +717,31 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8998528262332413112, guid: be2c2d3441ff09c4ea0785ad271b0a16,
+        type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 1218783726}
+    - target: {fileID: 8998528262332413112, guid: be2c2d3441ff09c4ea0785ad271b0a16,
+        type: 3}
+      propertyPath: m_RenderMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8998528262332413112, guid: be2c2d3441ff09c4ea0785ad271b0a16,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 117
+      objectReference: {fileID: 0}
+    - target: {fileID: 8998528262332413112, guid: be2c2d3441ff09c4ea0785ad271b0a16,
+        type: 3}
+      propertyPath: m_PlaneDistance
+      value: 20.19
+      objectReference: {fileID: 0}
+    - target: {fileID: 8998528262332413112, guid: be2c2d3441ff09c4ea0785ad271b0a16,
+        type: 3}
+      propertyPath: m_SortingLayerID
+      value: 165895443
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 7596993651707761120, guid: be2c2d3441ff09c4ea0785ad271b0a16, type: 3}
@@ -1814,8 +1839,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 326b70e43fe2e664c9ca85286c845754, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gooberPrefab: {fileID: 6855873998802248094, guid: 5570491ab3f5f4f4e861b19429729f51,
-    type: 3}
 --- !u!4 &1209449940
 Transform:
   m_ObjectHideFlags: 0
@@ -2554,8 +2577,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 198e21f732b4d034284b93993eb4e25e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _controller: {fileID: 941848168}
-  _timeSinceLastEnemyTick: 0
 --- !u!4 &1595816861
 Transform:
   m_ObjectHideFlags: 0
@@ -4521,10 +4542,10 @@ SceneRoots:
   m_Roots:
   - {fileID: 941848169}
   - {fileID: 1218783727}
+  - {fileID: 431055610}
   - {fileID: 825952755}
   - {fileID: 529778824}
   - {fileID: 1595816861}
   - {fileID: 1209449940}
   - {fileID: 1766977292}
-  - {fileID: 431055610}
   - {fileID: 2137673347}
