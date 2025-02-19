@@ -13,7 +13,8 @@ namespace Assets.Enemy.Scripts
 
         public abstract string Name { get; set; }
         public abstract int Cost { get; set; }
-        public abstract int Damage { get; set; }
+        public abstract float Health { get; set; }
+        public abstract float Damage { get; set; }
         public abstract float Range { get; set; }
         public abstract float AttackSpeed { get; set; }
 

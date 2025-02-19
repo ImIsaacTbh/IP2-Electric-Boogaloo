@@ -19,8 +19,10 @@ public class GlobalController : MonoBehaviour
     public bool isFullscreen;
     public Resolution resolution;
 
-    [Header("Wave Controls")]
-    public bool _isWaveInProgress;
+    [Header("Wave Controls")] 
+    public bool _isWaveInProgress = false;
+    public float _wavecoefficient = 1.5f;
+    public float _waveexponent = 50f;
 
     [Header("Tower Controls")]
     public float _towerTickRate = 60f;
@@ -47,6 +49,7 @@ public class GlobalController : MonoBehaviour
     void Start()
     {
         Debug.Log("Started Central Controller");
+        Events.TryStartWave += TryStartWave;
     }
     void Update()
     {
@@ -56,6 +59,15 @@ public class GlobalController : MonoBehaviour
         if (!_isGamePaused && _timeSinceLastCentralTick > 1 / _centralTickRate)
         {
             Events.SendCentralTick(EventArgs.Empty);
+        }
+    }
+
+    void TryStartWave(object sender, EventArgs e)
+    {
+        if (!_isWaveInProgress)
+        {
+            _isWaveInProgress = true;
+            Events.SendWaveStart(EventArgs.Empty);
         }
     }
 }
