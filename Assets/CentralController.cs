@@ -14,6 +14,11 @@ public class GlobalController : MonoBehaviour
     public float _centralTickRate = 60f;
     public bool _isGamePaused;
 
+    [Header("User Controls")]
+    public float volume;
+    public bool isFullscreen;
+    public Resolution resolution;
+
     [Header("Wave Controls")]
     public bool _isWaveInProgress;
 
@@ -45,6 +50,8 @@ public class GlobalController : MonoBehaviour
     }
     void Update()
     {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
         _timeSinceLastCentralTick += Time.deltaTime;
         if (!_isGamePaused && _timeSinceLastCentralTick > 1 / _centralTickRate)
         {

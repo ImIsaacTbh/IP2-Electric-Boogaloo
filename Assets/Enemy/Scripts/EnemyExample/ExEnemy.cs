@@ -22,11 +22,17 @@ namespace Assets.Enemy.Scripts.EnemyExample
         {
             _controller = GlobalController.instance;
             _controller.Events.EnemyTick += OnEnemyTick;
+            _controller.Events.Pause += DoPause;
             //_controller.Events.EnemyTarget += OnEnemyTarget;
             GetComponent<NavMeshAgent>().enabled = true;
             GetComponent<NavMeshAgent>().destination = MapHandler.instance._checkpointList[0].transform.position;
         }
-        
+
+        public void DoPause(object sender, EventArgs e)
+        {
+
+        }
+
         public void OnEnemyTick(object sender, EventArgs e)
         {
             Debug.Log("Ticked Enemy");
