@@ -44,3 +44,6 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Hamburger
+    uniqueID: 165895443
+    locked: 0
