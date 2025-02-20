@@ -17,6 +17,7 @@ namespace Assets.Enemy.Scripts
         public abstract float Range { get; set; }
         public abstract float AttackSpeed { get; set; }
 
+
         public void Start()
         {
             _controller.Events.EnemyTick += OnEnemyTick;
@@ -31,7 +32,10 @@ namespace Assets.Enemy.Scripts
         {
             if (other.CompareTag("EnemyKillVolume"))
             {
+
                 Destroy(this.gameObject);
+                Console.WriteLine("test");
+
                 _controller.Events.SendEnemyCompletedPath(Cost);
             }
         }
