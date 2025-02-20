@@ -3,30 +3,18 @@ using UnityEngine;
 
 public class EnemyDamage : MonoBehaviour
 {
-
-    [SerializeField] private StatsController statsController;
+    GlobalController _controller;
 
     private void Start()
     {
-        
+        _controller = GlobalController.instance;
     }
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Enemy"))
         {
-            statsController.DecreaseHealth(10);
+            _controller.DecreaseHealth(10);
         }
         
     }
-
-
-    private void Update()
-    {
-        if (Input.GetMouseButtonDown(0)) {
-            statsController.IncreaseCurrency(10);
-
-        }
-    }
-
-
 }

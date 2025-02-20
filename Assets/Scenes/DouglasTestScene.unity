@@ -537,73 +537,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 251630300}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &265201800
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 265201802}
-  - component: {fileID: 265201801}
-  - component: {fileID: 265201803}
-  m_Layer: 0
-  m_Name: Die
-  m_TagString: EnemyKillVolume
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!65 &265201801
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 265201800}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!4 &265201802
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 265201800}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12.46, y: 0.6, z: -3.32}
-  m_LocalScale: {x: 2.2996604, y: 2.2996604, z: 3.6233451}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &265201803
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 265201800}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d29328b38da881d45aedb07206a8c52a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  statsController: {fileID: 2145758862}
 --- !u!1 &456415638
 GameObject:
   m_ObjectHideFlags: 0
@@ -1762,6 +1695,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _centralTickRate: 60
   _isGamePaused: 0
+  _health: 0
+  _coins: 0
+  volume: 0
+  isFullscreen: 0
   _isWaveInProgress: 0
   _towerTickRate: 60
   _enemyTickRate: 30
@@ -4778,6 +4715,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2145758863}
   - component: {fileID: 2145758862}
+  - component: {fileID: 2145758864}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -4817,6 +4755,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2145758864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2145758861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d29328b38da881d45aedb07206a8c52a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &627547251353588607
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4914,4 +4864,3 @@ SceneRoots:
   - {fileID: 203751118}
   - {fileID: 634716661}
   - {fileID: 2145758863}
-  - {fileID: 265201802}

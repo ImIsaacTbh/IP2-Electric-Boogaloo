@@ -12,11 +12,6 @@ namespace Assets
         public GlobalController _controller = GlobalController.instance;
         public float _timeSinceLastEnemyTick = 0f;
 
-        void Awake()
-        {
-            _controller.Events.CentralTick += OnCentralTick;
-        }
-
         public void OnCentralTick(object sender, EventArgs e)
         {
             Debug.Log("Recieved Event");
@@ -29,6 +24,8 @@ namespace Assets
 
         void Start()
         {
+            
+            _controller.Events.CentralTick += OnCentralTick;
             Debug.Log("Started EnemyController");
         }
 

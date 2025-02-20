@@ -11,7 +11,7 @@ namespace Assets
         private void FixedUpdate()
         {
             shpeeeeed++;
-            if (shpeeeeed == 1)
+            if (shpeeeeed == 25)
             {
                 shpeeeeed = 0;
                 Instantiate(gooberPrefab).transform.position = transform.position;

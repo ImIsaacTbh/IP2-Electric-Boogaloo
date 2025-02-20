@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TowerSelector : MonoBehaviour
 {
+    public static TowerSelector instance;
     public bool spawnMode = false;
     public GameObject[] towers;
     public GameObject activeTower;
@@ -14,13 +15,20 @@ public class TowerSelector : MonoBehaviour
 
     public void Start()
     {
+        if(instance == null)
+        {
+            instance = this;
+        }
         floorScript = floor.GetComponent<TowerSpawning>();
     }
     private void Update()
     {
         if (spawnMode)
         {
-            previewTower.gameObject.transform.position = floorScript.worldPosition;
+            var dropRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+            bool cast = Physics.Raycast(dropRay.origin, dropRay.direction, out var hit, 9999, 1 << 6);
+            var succHit = hit.point;
+            previewTower.transform.position = cast ? succHit : new Vector3(69, 69, 69);
         }
 
     }

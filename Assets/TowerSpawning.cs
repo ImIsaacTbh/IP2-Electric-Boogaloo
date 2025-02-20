@@ -1,37 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Transactions;
 using UnityEngine;
 
 public class TowerSpawning : MonoBehaviour
 {
     public GameObject towerSelection;
-    private TowerSelector towerSelector;
     public Vector3 mousePos;
     public Vector3 worldPosition;
 
-    public void Start()
-    {
-        towerSelector = towerSelection.gameObject.GetComponent<TowerSelector>();
-    }
-
-    public void Update()
-    {
-        mousePos = Input.mousePosition;
-        mousePos.z = Camera.main.nearClipPlane + 55;
-        worldPosition = Camera.main.ScreenToWorldPoint(mousePos);
-    }
-
     public void TowerPlace()
     {
-        if (towerSelector.spawnMode)
+        if (TowerSelector.instance.spawnMode)
         {
-            int towerCost = towerSelector.previewTower.GetComponent<TowerManager>().towerCost;
-            towerSelector.coins -= towerCost;
+            int towerCost = TowerSelector.instance.previewTower.GetComponent<TowerManager>().towerCost;
+            TowerSelector.instance.coins -= towerCost;
 
-            Destroy(towerSelector.previewTower);
-            var turret = Instantiate(towerSelector.activeTower, worldPosition, transform.rotation);
+            Destroy(TowerSelector.instance.previewTower);
+            var dropRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+            bool cast = Physics.Raycast(dropRay.origin, dropRay.direction, out var hit, 9999, 1 << 6);
+            var succHit = hit.point;
 
-            towerSelector.spawnMode = false;
+            var turret = Instantiate(TowerSelector.instance.activeTower, succHit, transform.rotation);
+
+            TowerSelector.instance.spawnMode = false;
         }
     }
 }
