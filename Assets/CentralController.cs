@@ -1,3 +1,8 @@
+
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using Assets;
 using Assets.Enemy.Scripts;
 using System;
@@ -9,11 +14,14 @@ public class GlobalController : MonoBehaviour
 {
     public static GlobalController instance = null;
     public Events Events = new Events();
+    public List<GameObject> assets = new List<GameObject>();
 
     //Central Game Controls
     [Header("Central Controls")] 
     public float _centralTickRate = 60f;
     public bool _isGamePaused;
+    public float _health;
+    public float _coins;
 
     [Header("User Controls")]
     public float volume;
@@ -72,6 +80,28 @@ public class GlobalController : MonoBehaviour
             _isWaveInProgress = true;
             Events.SendWaveStart(EventArgs.Empty);
         }
+    }
+
+    public void DecreaseHealth(int amount)
+    {
+        _health -= amount;
+        if (_health <= 0)
+        {
+            Events.SendPause(EventArgs.Empty);
+            assets.FirstOrDefault(x => x.name == "GameOver").SetActive(true);
+        }
+    }
+    public void IncreaseHealth(int amount)
+    {
+        _health += amount;
+    }
+    public void DecreaseCoins(int amount)
+    {
+        _coins -= amount;
+    }
+    public void IncreaseCoins(int amount)
+    {
+        _coins += amount;
     }
 }
 

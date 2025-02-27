@@ -46,6 +46,8 @@ namespace Assets
 
         void Start()
         {
+            
+            _controller.Events.CentralTick += OnCentralTick;
             Debug.Log("Started EnemyController");
         }
 
