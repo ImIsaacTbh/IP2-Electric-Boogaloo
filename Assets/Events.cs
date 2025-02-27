@@ -8,21 +8,6 @@ using UnityEngine;
 
 namespace Assets
 {
-    public class EventData
-    {
-        public class EnemySpawnArgs
-        {
-            public EnemySpawnArgs(int enemyCount, float healthModifier, float damageModifier)
-            {
-                this.enemyCount = enemyCount;
-                this.damageModifier = damageModifier;
-                this.healthModifier = healthModifier;
-            }
-            public float healthModifier;
-            public float damageModifier;
-            public int enemyCount;
-        }
-    }
     public class Events
     {
         public event EventHandler CentralTick;
@@ -70,8 +55,8 @@ namespace Assets
             Debug.Log($"Enemy with cost of: {cost}, completed the path.");
         }
 
-        public event EventHandler<EventData.EnemySpawnArgs> SpawnEnemy;
-        public virtual void SendSpawnEnemy(EventData.EnemySpawnArgs e)
+        public event EventHandler<GameObject> SpawnEnemy;
+        public virtual void SendSpawnEnemy(GameObject e)
         {
             SpawnEnemy?.Invoke(this, e);
         }

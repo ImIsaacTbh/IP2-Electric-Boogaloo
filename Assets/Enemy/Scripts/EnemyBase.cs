@@ -25,7 +25,7 @@ namespace Assets.Enemy.Scripts.EnemyExample
             Damage = (int)(Damage * damageMult);
         }
 
-        public void Start()
+        public void Awake()
         {
             _controller = GlobalController.instance;
             _controller.Events.EnemyTick += OnEnemyTick;
@@ -58,23 +58,5 @@ namespace Assets.Enemy.Scripts.EnemyExample
         //         GetComponent<NavMeshAgent>().destination = transform.position;
         //     }
         // }
-
-        public void OnTriggerEnter(Collider other)
-        {
-            
-            if (other.gameObject.CompareTag("Checkpoint"))
-            {
-                try
-                {
-                    GetComponentInChildren<NavMeshAgent>().destination = other.transform.parent
-                        .GetChild(int.Parse(other.gameObject.name)).transform.position;
-                }
-                catch {
-                    Debug.LogWarning("Something brokeded lmao");
-                }
-            }
-            base.OnTriggerEnter(other);
-
-        }
     }
 }

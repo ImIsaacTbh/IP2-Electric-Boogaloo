@@ -1,7 +1,8 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Assets;
+using Assets.Enemy.Scripts;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GlobalController : MonoBehaviour
@@ -20,15 +21,17 @@ public class GlobalController : MonoBehaviour
     public Resolution resolution;
 
     [Header("Wave Controls")] 
+    public int _waveNumber = 1;
+    public bool _waitingForWaveStart = false;
     public bool _isWaveInProgress = false;
-    public float _wavecoefficient = 1.5f;
-    public float _waveexponent = 50f;
 
     [Header("Tower Controls")]
     public float _towerTickRate = 60f;
 
     [Header("Enemy Controls")]
     public float _enemyTickRate = 30f;
+
+    public float _globalEnemySpawnRate = 0.5f;
 
     //Tracking variables
     public static float _timeSinceLastCentralTick;
@@ -69,5 +72,30 @@ public class GlobalController : MonoBehaviour
             _isWaveInProgress = true;
             Events.SendWaveStart(EventArgs.Empty);
         }
+    }
+}
+
+public static class HelpfulShit
+{
+    public static IEnumerable<T> PickRandom<T>(this IEnumerable<T> list, int count)
+    {
+        return list.OrderBy(x => Guid.NewGuid()).Take(count);
+    }
+
+    public static T PickRandom<T>(this IEnumerable<T> list)
+    {
+        return list.PickRandom(1).Single();
+    }
+
+    public static string Debug(this Wave wave)
+    {
+        string output = String.Empty;
+        output += $"------------WAVE DATA-----------\nWave Number: {GlobalController.instance._waveNumber}\nSpawn Interval: {wave.spawnInterval}\nTicks since last enemy spawn: {WaveManager.instance.ticksSinceLastSpawn}\n-----ENEMIES-----\n";
+        foreach(var enemyType in wave.enemyBunches)
+        {
+            output += ($"Enemy: {enemyType.enemyPrefab.name} Count: {enemyType.count}\n");
+        }
+        output += ($"----------END WAVE DATA---------");
+        return output;
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Assets.Enemy.Scripts
 {
@@ -28,8 +29,22 @@ namespace Assets.Enemy.Scripts
             
         }
 
-        public void OnTriggerEnter(Collider other)
+        private void OnTriggerEnter(Collider other)
         {
+            print("Entered trigger");
+            if (other.gameObject.CompareTag("Checkpoint"))
+            {
+                print("Got to checkpoint");
+                try
+                {
+                    GetComponentInChildren<NavMeshAgent>().destination = other.transform.parent
+                        .GetChild(int.Parse(other.gameObject.name)).transform.position;
+                }
+                catch
+                {
+                    Debug.LogWarning("Something brokeded lmao");
+                }
+            }
             if (other.CompareTag("EnemyKillVolume"))
             {
                 Destroy(this.gameObject);

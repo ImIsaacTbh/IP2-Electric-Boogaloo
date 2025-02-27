@@ -1,12 +1,17 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using Assets.Enemy.Scripts.EnemyExample;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Assets.Enemy.Scripts
 {
     public class GooberSpawner : MonoBehaviour
     {
+        public static GooberSpawner instance = null;
         private GlobalController _controller;
-        public GameObject gooberPrefab;
+        public List<GameObject> gooberPrefabs;
 
         public float _timeSinceLastGooberSpawn = 0f;
 
@@ -15,29 +20,20 @@ namespace Assets.Enemy.Scripts
         private void Start()
         {
             _controller = GlobalController.instance;
-            _controller.Events.CentralTick += CentralTick;
-            _controller.Events.SpawnEnemy += SpawnEnemy;
-        }
-
-        private void CentralTick(object sender, System.EventArgs e)
-        {
-            _timeSinceLastGooberSpawn += Time.deltaTime;
-            if (Mathf.Pow(_controller._wavecoefficient, _controller._waveexponent) < _timeSinceLastGooberSpawn)
+            if(instance == null)
             {
-                _controller.Events.SendSpawnEnemy(new EventData.EnemySpawnArgs(5, _controller._waveexponent, _controller._waveexponent));
-                _timeSinceLastGooberSpawn = 0;
+                instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
             }
         }
 
-        private void SpawnEnemy(object sender, EventData.EnemySpawnArgs args)
+        public void Spawn(GameObject gooberPrefab)
         {
-            for (int i = 0; i < args.enemyCount; i++)
-            {
-                var goober = Instantiate(gooberPrefab);
-                goober.transform.position = transform.position;
-                goober.AddComponent<EnemyBase>().Health *= args.healthModifier;
-                goober.GetComponent<EnemyBase>().Damage *= args.damageModifier;
-            }
+            GameObject goober = Instantiate(gooberPrefab, transform.position, Quaternion.identity);
+            EnemyController.instance._enemiesInPlay.Add(goober);
         }
     }
 }

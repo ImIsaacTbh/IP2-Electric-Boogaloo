@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Assets.Enemy.Scripts;
 using UnityEngine;
 
 public class HandleButtons : MonoBehaviour
@@ -13,6 +14,11 @@ public class HandleButtons : MonoBehaviour
 
     public void AttemptStartWave()
     {
-        _controller.Events.SendTryStartWave(EventArgs.Empty);
+            _controller.Events.SendTryStartWave(EventArgs.Empty);
+    }
+
+    public void SkipWave()
+    {
+        WaveManager.instance.SkipWave();
     }
 }
