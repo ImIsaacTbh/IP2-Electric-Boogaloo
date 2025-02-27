@@ -25,7 +25,6 @@ namespace Assets
         {
             EnemyTick?.Invoke(this, e);
         }
-
         public event EventHandler<KeyValuePair<int, Vector3>> EnemyTargetSpecific;
 
         public virtual void SendEnemyTargetSpecific(int id, Vector3 targetPos)
@@ -56,6 +55,11 @@ namespace Assets
             Debug.Log($"Enemy with cost of: {cost}, completed the path.");
         }
 
+        public event EventHandler<GameObject> SpawnEnemy;
+        public virtual void SendSpawnEnemy(GameObject e)
+        {
+            SpawnEnemy?.Invoke(this, e);
+        }
         public event EventHandler Pause;
         public virtual void SendPause(EventArgs e)
         {
@@ -65,6 +69,12 @@ namespace Assets
         public virtual void SendUnPause(EventArgs e)
         {
             UnPause?.Invoke(this, e);
+        }
+
+        public event EventHandler TryStartWave;
+        public virtual void SendTryStartWave(EventArgs e)
+        {
+            TryStartWave?.Invoke(this, e);
         }
     }
 }
