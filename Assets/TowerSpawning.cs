@@ -13,7 +13,7 @@ public class TowerSpawning : MonoBehaviour
     {
         if (TowerSelector.instance.spawnMode)
         {
-            int towerCost = TowerSelector.instance.previewTower.GetComponent<TowerManager>().towerCost;
+            int towerCost = TowerSelector.instance.previewTower.GetComponent<TowerFunction>().TowerValue;
             TowerSelector.instance.coins -= towerCost;
 
             Destroy(TowerSelector.instance.previewTower);
@@ -22,7 +22,7 @@ public class TowerSpawning : MonoBehaviour
             var succHit = hit.point;
 
             var turret = Instantiate(TowerSelector.instance.activeTower, succHit, transform.rotation);
-
+            TowerManager.instance.activeTowers.Add(turret);
             TowerSelector.instance.spawnMode = false;
         }
     }

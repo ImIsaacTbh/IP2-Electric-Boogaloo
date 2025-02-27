@@ -121,10 +121,11 @@ namespace Assets.Enemy.Scripts
 
         public void SkipWave()
         {
+            _controller.Events.SendResetWave(null);
             currentWave = null;
-            EnemyController.instance.KillAllEnemies();
             _controller._isWaveInProgress = false;
             _controller._waveNumber++;
+            
         }
     }
 }

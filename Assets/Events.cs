@@ -76,5 +76,11 @@ namespace Assets
         {
             TryStartWave?.Invoke(this, e);
         }
+
+        public event EventHandler ResetWave;
+        public virtual void SendResetWave(EventArgs e)
+        {
+            ResetWave?.Invoke(this, e);
+        }
     }
 }
