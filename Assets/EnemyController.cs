@@ -26,7 +26,7 @@ namespace Assets
             {
                 Destroy(gameObject);
             }
-            _controller.Events.CentralTick += OnCentralTick;
+            //_controller.Events.CentralTick += OnCentralTick;
             _controller.Events.ResetWave += (sender, args) => {KillAllEnemies();};
         }
 

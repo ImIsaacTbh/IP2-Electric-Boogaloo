@@ -125,7 +125,6 @@ namespace Assets.Enemy.Scripts
             currentWave = null;
             _controller._isWaveInProgress = false;
             _controller._waveNumber++;
-            
         }
     }
 }

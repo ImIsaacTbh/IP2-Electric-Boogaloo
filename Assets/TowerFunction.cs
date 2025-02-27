@@ -18,13 +18,14 @@ public class TowerFunction : MonoBehaviour
     public GlobalController instance = null;
     public List<GameObject> inRangeEnemies = new List<GameObject>();
     public TowerMode mode;
-
+    public GameObject projectile;
     public int TowerValue;
     // Start is called before the first frame update
     void Start()
     {
         instance = GlobalController.instance;
         instance.Events.TowerTick += OnTowerTick;
+        projectile = transform.GetChild(1).gameObject;
     }
 
     void OnTowerTick(object sender, EventArgs e)
@@ -46,6 +47,10 @@ public class TowerFunction : MonoBehaviour
                 {
                     inRangeEnemies.Remove(g);
                 }
+            }
+            if (closest.Key != null)
+            {
+                //Instantiate(projectile);
             }
 
             inRangeEnemies.Remove(closest.Key);
