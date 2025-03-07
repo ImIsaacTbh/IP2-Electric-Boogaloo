@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1645303795250228404}
   - component: {fileID: 1249321194977830476}
   - component: {fileID: -3166414677343913027}
-  - component: {fileID: -8806820866530322201}
+  - component: {fileID: 1256832502405965073}
   m_Layer: 0
   m_Name: TowerPink
   m_TagString: Untagged
@@ -136,7 +136,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &-8806820866530322201
+--- !u!114 &1256832502405965073
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -145,7 +145,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7618376868819406074}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0681d76f9a124e64e900759c3157265e, type: 3}
+  m_Script: {fileID: 11500000, guid: 8041949ee89b2d34d8172531de6570a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  towerCost: 250
+  instance: {fileID: 0}
+  inRangeEnemies: []
+  mode: 0
+  TowerValue: 250

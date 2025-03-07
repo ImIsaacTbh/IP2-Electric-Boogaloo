@@ -57,13 +57,13 @@ public class TowerSelector : MonoBehaviour
                 print("No tower selected");
                 break;
         }
-        if (coins >= activeTower.GetComponent<TowerManager>().towerCost)
+        if (coins >= activeTower.GetComponent<TowerFunction>().TowerValue)
         {
             spawnMode = true;
             print(activeTower.gameObject.name);
             previewTower = Instantiate(activeTower, floorScript.worldPosition, transform.rotation);
             previewTower.transform.Rotate(90, 0, 0);
-            previewTower.GetComponent<CapsuleCollider>().enabled = false;
+            previewTower.GetComponent<TowerFunction>().enabled = false;
         }
         else
         {
