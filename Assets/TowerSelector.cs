@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
+using TMPro;
 public class TowerSelector : MonoBehaviour
 {
     public static TowerSelector instance;
@@ -11,6 +12,8 @@ public class TowerSelector : MonoBehaviour
     public GameObject previewTower;
     public GameObject floor;
     private TowerSpawning floorScript;
+    public GameObject notEnoughCoins;
+    public TextMeshPro coinsText;
     public int coins;
 
     public void Start()
@@ -23,6 +26,8 @@ public class TowerSelector : MonoBehaviour
     }
     private void Update()
     {
+        coinsText.text = coins.ToString();
+
         if (spawnMode)
         {
             var dropRay = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -63,6 +68,15 @@ public class TowerSelector : MonoBehaviour
         else
         {
             print("You cannot afford this!");
+            notEnoughCoins.gameObject.SetActive(true);
+            StartCoroutine("Feedback");
         }
+    }
+
+    public IEnumerator Feedback()
+    {
+        yield return new WaitForSeconds(1.5f);
+
+        notEnoughCoins.gameObject.SetActive(false);
     }
 }
