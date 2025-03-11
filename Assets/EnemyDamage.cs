@@ -15,6 +15,14 @@ public class EnemyDamage : MonoBehaviour
         {
             _controller.DecreaseHealth(10);
         }
-        
+        if (other.CompareTag("Enemyfast"))
+        {
+            _controller.DecreaseHealth(5);
+
+        }
+        if (other.CompareTag("Enemyslow"))
+        {
+            _controller.DecreaseHealth(20);
+        }
     }
 }
