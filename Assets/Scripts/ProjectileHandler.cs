@@ -1,23 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Assets.Enemy.Scripts.EnemyExample;
 using UnityEngine;
 
 public class ProjectileHandler : MonoBehaviour
 {
-    //public Vector3 startPosition;
-    //public Vector3 endPosition;
+    public int dmg;
+    void Update()
+    {
+        
+    }
 
-    //// Update is called once per frame
-    //void Update()
-    //{
-    //    float x0 = startPosition.x;
-    //    float x1 = endPosition.x;
-    //    float dist = x1 - x0;
-    //    float nextX = Mathf.MoveTowards(transform.position.x, x1, 5*Time.deltaTime);
-    //    float baseY = Mathf.Lerp(startPosition.y, endPosition.y, (nextX - x0) / dist);
-    //    float arc = 5 * (nextX - x0) * (nextX - x1) / (0.25f * dist * dist);
-    //    nextPos = new Vector3(nextX, baseY + arc, transform.position.z);
-
-    //    transform.rotation
-    //}
+    void OnTriggerEnter(Collider enemy)
+    {
+        if (enemy.CompareTag("Enemy"))
+        {
+            Component c = enemy.GetComponents<Component>().FirstOrDefault(x => x.GetType().IsSubclassOf(typeof(EnemyBase)));
+            ((EnemyBase)c).Health -= dmg;
+        }
+    }
 }
