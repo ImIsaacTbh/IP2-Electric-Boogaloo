@@ -13,8 +13,10 @@ public class TowerSelector : MonoBehaviour
     public GameObject floor;
     private TowerSpawning floorScript;
     public GameObject notEnoughCoins;
+    public GameObject cannotPlace;
     public TextMeshPro coinsText;
     public int coins;
+    public bool canSpawn;
 
     public void Start()
     {
@@ -62,7 +64,8 @@ public class TowerSelector : MonoBehaviour
             spawnMode = true;
             print(activeTower.gameObject.name);
             previewTower = Instantiate(activeTower, floorScript.worldPosition, transform.rotation);
-            previewTower.transform.Rotate(90, 0, 0);
+            previewTower.transform.Rotate(-28, 0, 0);
+            previewTower.tag = "PreviewTower";
             previewTower.GetComponent<TowerFunction>().enabled = false;
         }
         else
@@ -78,5 +81,6 @@ public class TowerSelector : MonoBehaviour
         yield return new WaitForSeconds(1.5f);
 
         notEnoughCoins.gameObject.SetActive(false);
+        cannotPlace.gameObject.SetActive(false);
     }
 }
