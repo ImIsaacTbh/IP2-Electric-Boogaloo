@@ -880,11 +880,9 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2056873108}
+  - {fileID: 686782374}
   m_Father: {fileID: 5974544610745596594}
   m_LocalEulerAnglesHint: {x: 85, y: 180, z: 0}
-  - {fileID: 686782374}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &251630300
 GameObject:
   m_ObjectHideFlags: 0
@@ -11569,6 +11567,7 @@ RectTransform:
   - {fileID: 1432896657}
   - {fileID: 1974215115}
   - {fileID: 2003631537}
+  - {fileID: 211476523}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
