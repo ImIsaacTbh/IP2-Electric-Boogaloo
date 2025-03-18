@@ -1,4 +1,8 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -8,9 +12,6 @@ namespace Assets.Enemy.Scripts
     {
         public GlobalController _controller = GlobalController.instance;
 
-        // Audio source for death sound
-        private AudioSource _audioSource;
-
         public abstract string Name { get; set; }
         public abstract int Cost { get; set; }
         public abstract float Health { get; set; }
@@ -18,20 +19,15 @@ namespace Assets.Enemy.Scripts
         public abstract float Range { get; set; }
         public abstract float AttackSpeed { get; set; }
 
+
         public void Start()
         {
             _controller.Events.EnemyTick += OnEnemyTick;
-
-            // Initialize AudioSource
-            _audioSource = GetComponent<AudioSource>();
-            if (_audioSource == null)
-            {
-                _audioSource = gameObject.AddComponent<AudioSource>();
-            }
         }
 
         public void OnEnemyTick(object sender, EventArgs e)
         {
+            
         }
 
         private void OnTriggerEnter(Collider other)
@@ -50,18 +46,10 @@ namespace Assets.Enemy.Scripts
                     Debug.LogWarning("Something brokeded lmao");
                 }
             }
-
             if (other.CompareTag("EnemyKillVolume"))
             {
-                // Play death sound
-                if (_audioSource != null && _audioSource.clip != null)
-                {
-                    _audioSource.Play();
-                }
 
-                // Destroy GameObject after sound finishes playing
-                Destroy(gameObject, _audioSource.clip.length);
-
+                Destroy(this.gameObject);
                 Console.WriteLine("test");
 
                 _controller.Events.SendEnemyCompletedPath(Cost);

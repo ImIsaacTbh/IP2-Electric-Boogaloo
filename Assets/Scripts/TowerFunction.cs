@@ -19,13 +19,19 @@ public class TowerFunction : MonoBehaviour
     public List<GameObject> inRangeEnemies = new List<GameObject>();
     public TowerMode mode;
     public GameObject projectile;
+    public bool ProjMotion;
+    public float projMotionLaunchAngle;
+    public string customBehaviour;
     public int TowerValue;
+
+    private Vector3 projSpawnPos;
     // Start is called before the first frame update
     void Start()
     {
         instance = GlobalController.instance;
         instance.Events.TowerTick += OnTowerTick;
         projectile = transform.GetChild(1).gameObject;
+        projSpawnPos = transform.GetChild(2).gameObject.transform.position;
     }
 
     void OnTowerTick(object sender, EventArgs e)
@@ -48,21 +54,50 @@ public class TowerFunction : MonoBehaviour
                     inRangeEnemies.Remove(g);
                 }
             }
+
             if (closest.Key != null)
             {
-                //Instantiate(projectile);
-            }
+                if (ProjMotion)
+                {
+                    print("firing bullet");
+                    GameObject proj = Instantiate(projectile);
+                    proj.transform.position = projSpawnPos;
+                    proj.transform.localScale = new Vector3(0.15f, 0.15f, 0.15f);
+                    proj.layer = 8;
+                    Rigidbody rb = proj.GetComponentInChildren<Rigidbody>();
+                    Vector3 target = closest.Key.transform.position;
+                    
+                    Vector3 direction = target - projSpawnPos;
+                    float h = direction.y;
+                    direction.y = 0;
+                    float distance = direction.magnitude;
+                    float a = projMotionLaunchAngle * Mathf.Deg2Rad;
+                    direction.y = distance * Mathf.Tan(a);
+                    distance += h / Mathf.Tan(a);
 
-            inRangeEnemies.Remove(closest.Key);
-            try
-            {
-                Destroy(closest.Key);
+                    // Calculate the velocity
+                    float velocity = Mathf.Sqrt(distance * Physics.gravity.magnitude / Mathf.Sin(2 * a));
+                    rb.velocity = velocity * direction.normalized;
+
+                    proj.AddComponent<LookForward>();
+                    proj.SetActive(true);
+                }
+                else
+                {
+                    Destroy(closest.Key);
+                }
             }
-            catch
-            {
-                inRangeEnemies.Remove(closest.Key);
-                print("Tried to destroy null object");
-            }
+            
+            
+            // try
+            // {
+            //
+            // }
+            // catch
+            // {
+            //     inRangeEnemies.Remove(closest.Key);
+            //     print("Tried to destroy null object");
+            // }
         }
     }
 
@@ -86,5 +121,13 @@ public class TowerFunction : MonoBehaviour
     void Update()
     {
         
+    }
+}
+
+public class LookForward : MonoBehaviour
+{
+    private void Update()
+    {
+        transform.rotation = Quaternion.LookRotation(GetComponent<Rigidbody>().velocity);
     }
 }

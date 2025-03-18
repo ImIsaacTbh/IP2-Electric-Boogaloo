@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-
 public class TowerSelector : MonoBehaviour
 {
     public static TowerSelector instance;
@@ -14,30 +13,19 @@ public class TowerSelector : MonoBehaviour
     public GameObject floor;
     private TowerSpawning floorScript;
     public GameObject notEnoughCoins;
+    public GameObject cannotPlace;
     public TextMeshPro coinsText;
     public int coins;
-
-    // New variables for audio
-    public AudioSource audioSource; // Reference to the AudioSource
-    public AudioClip clickSound;    // Reference to the audio clip for clicking
-
-
+    public bool canSpawn;
 
     public void Start()
     {
-        if (instance == null)
+        if(instance == null)
         {
             instance = this;
         }
         floorScript = floor.GetComponent<TowerSpawning>();
-
-        // Initialize AudioSource if not assigned
-        if (audioSource == null)
-        {
-            audioSource = gameObject.AddComponent<AudioSource>();
-        }
     }
-
     private void Update()
     {
         coinsText.text = coins.ToString();
@@ -49,16 +37,10 @@ public class TowerSelector : MonoBehaviour
             var succHit = hit.point;
             previewTower.transform.position = cast ? succHit : new Vector3(69, 69, 69);
         }
-    }
 
+    }
     public void TowerSelect(string tower)
     {
-        // Play the click sound
-        if (audioSource != null && clickSound != null)
-        {
-            audioSource.PlayOneShot(clickSound);
-        }
-
         switch (tower)
         {
             case "red":
@@ -82,7 +64,8 @@ public class TowerSelector : MonoBehaviour
             spawnMode = true;
             print(activeTower.gameObject.name);
             previewTower = Instantiate(activeTower, floorScript.worldPosition, transform.rotation);
-            previewTower.transform.Rotate(90, 0, 0);
+            previewTower.transform.Rotate(-28, 0, 0);
+            previewTower.tag = "PreviewTower";
             previewTower.GetComponent<TowerFunction>().enabled = false;
         }
         else
@@ -98,5 +81,6 @@ public class TowerSelector : MonoBehaviour
         yield return new WaitForSeconds(1.5f);
 
         notEnoughCoins.gameObject.SetActive(false);
+        cannotPlace.gameObject.SetActive(false);
     }
 }
