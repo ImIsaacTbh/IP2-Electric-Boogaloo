@@ -1087,6 +1087,9 @@ MonoBehaviour:
   canSpawn: 1
   audioSource: {fileID: 57584469}
   clickSound: {fileID: 8300000, guid: c9dfc22bbfede0941b273b1021a1b316, type: 3}
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 --- !u!114 &253504880
 MonoBehaviour:
@@ -2193,7 +2196,10 @@ CanvasRenderer:
   m_GameObject: {fileID: 621032349}
   m_CullTransparentMesh: 1
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
+=======
+>>>>>>> Stashed changes
 --- !u!1 &625897936
 GameObject:
   m_ObjectHideFlags: 0
@@ -11712,7 +11718,11 @@ SceneRoots:
   - {fileID: 843465234}
   - {fileID: 1385430817}
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   - {fileID: 211476523}
+=======
+  - {fileID: 57584470}
+>>>>>>> Stashed changes
 =======
   - {fileID: 57584470}
 >>>>>>> Stashed changes

@@ -21,17 +21,7 @@ public class TowerSelector : MonoBehaviour
     public AudioSource audioSource; // Reference to the AudioSource
     public AudioClip clickSound;    // Reference to the audio clip for clicking
 
-    // New variables for audio
-    public AudioSource audioSource; // Reference to the AudioSource
-    public AudioClip clickSound;    // Reference to the audio clip for clicking
 
-    // New variables for audio
-    public AudioSource audioSource; // Reference to the AudioSource
-    public AudioClip clickSound;    // Reference to the audio clip for clicking
-
-    // New variables for audio
-    public AudioSource audioSource; // Reference to the AudioSource
-    public AudioClip clickSound;    // Reference to the audio clip for clicking
 
     public void Start()
     {
