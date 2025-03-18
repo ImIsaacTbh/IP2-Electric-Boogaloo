@@ -20,10 +20,9 @@ public class PauseMenu : MonoBehaviour
 
     void Update()
     {
-        //pauses game
+        // Pauses game
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            
             PauseUnPause();
         }
     }
@@ -32,25 +31,32 @@ public class PauseMenu : MonoBehaviour
     {
         if (_controller._isGamePaused)
         {
-
             _controller._isGamePaused = false;
             pauseScreen.SetActive(false);
-            Cursor.lockState = CursorLockMode.Locked;//locks cursor if game is unpaused
-            Cursor.visible = false;//hides pause menu
+            Cursor.lockState = CursorLockMode.Locked; // Locks cursor if game is unpaused
+            Cursor.visible = false; // Hides pause menu
             _controller.Events.SendUnPause(EventArgs.Empty);
         }
         else
         {
             _controller._isGamePaused = true;
-            pauseScreen.SetActive(true);//shows pause menu
+            pauseScreen.SetActive(true); // Shows pause menu
             Cursor.visible = true;
             _controller.Events.SendPause(EventArgs.Empty);
         }
     }
+
     public void MainMenu()
     {
         Debug.Log("did thing");
-        //loads main menu scene
+        // Loads main menu scene
         SceneManager.LoadScene(mainMenuName);
+    }
+
+    public void Replay()
+    {
+        Debug.Log("Reloading current scene");
+        // Reloads the current scene
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
