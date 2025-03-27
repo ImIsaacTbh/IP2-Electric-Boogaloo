@@ -32,11 +32,8 @@ namespace Assets.Enemy.Scripts
         public static WaveManager instance = null;
         public List<GameObject> enemyPrefabs;
 
-        [Header("Initial Wave Settings")]
-        public int minEnemiesPerWave = 5;
-        public int maxEnemiesPerWave = 20;
-        public float spawnInterval = 3f;
-
+        public List<Wave> waves = new List<Wave>();
+        
         public Wave currentWave;
         public float ticksSinceLastSpawn;
         private int enemiesSpawned;
@@ -45,7 +42,7 @@ namespace Assets.Enemy.Scripts
 
         void Awake()
         {
-            if(instance == null)
+            if (instance == null)
             {
                 instance = this;
             }
@@ -53,8 +50,52 @@ namespace Assets.Enemy.Scripts
             {
                 Destroy(this.gameObject);
             }
+
             _controller = GlobalController.instance;
-            _controller.Events.TryStartWave += (object sender, EventArgs e) =>
+
+            waves = new List<Wave>
+            {
+                new Wave(new List<EnemyBunch>()
+                {
+                    new EnemyBunch
+                    {
+                        enemyPrefab = enemyPrefabs[0],
+                        count = 4
+                    },
+                }, 1.5f),
+                new Wave(new List<EnemyBunch>()
+                {
+                    new EnemyBunch
+                    {
+                        enemyPrefab = enemyPrefabs[1],
+                        count = 1
+                    },
+                    new EnemyBunch
+                    {
+                        enemyPrefab = enemyPrefabs[0],
+                        count = 4
+                    }
+                }, 1.5f),
+                new Wave(new List<EnemyBunch>()
+                {
+                    new EnemyBunch
+                    {
+                        enemyPrefab = enemyPrefabs[1],
+                        count = 8
+                    }
+                }, 2f),
+                new Wave(new List<EnemyBunch>()
+                {
+                    new EnemyBunch
+                    {
+                        enemyPrefab = enemyPrefabs[0],
+                        count = 16
+                    }
+                }, 1f)
+            };
+
+
+        _controller.Events.TryStartWave += (object sender, EventArgs e) =>
             {
                 print("recieved attempted wave start");
                 if(!_controller._isWaveInProgress) StartWave();
@@ -65,60 +106,28 @@ namespace Assets.Enemy.Scripts
         public void EnemyTick(object sender, EventArgs e)
         {
             if (!_controller._isWaveInProgress) return;
-            ticksSinceLastSpawn++;
-            if (ticksSinceLastSpawn > currentWave.spawnInterval *50)
-            {
-                try
-                {
-                    EnemyBunch bunch = currentWave.enemyBunches.First();
-                    for (int i = 0; i < bunch.count; i++)
-                    {
-                        GooberSpawner.instance.Spawn(bunch.enemyPrefab);
-                        currentWave.enemyBunches.Remove(bunch);
-                    }
-                }
-                catch
-                {
-                }
-
-                ticksSinceLastSpawn = 0;
-            }
         }
 
+        public IEnumerator spawnGoobers()
+        {
+            foreach (EnemyBunch b in currentWave.enemyBunches)
+            {
+                for (int i = 0; i < b.count; i++)
+                {
+                    GooberSpawner.instance.Spawn(b.enemyPrefab);
+                    yield return new WaitForSeconds(currentWave.spawnInterval);
+                }
+            }
+        }
+        
         private void StartWave()
         {
-            GenerateRandomWave(_controller._waveNumber);
             _controller._isWaveInProgress = true;
             ticksSinceLastSpawn = float.MaxValue;
+            currentWave = waves[_controller._waveNumber];
+            StartCoroutine(spawnGoobers());
         }
-
-        void GenerateRandomWave(int waveNumber)
-        {
-            List<EnemyBunch> enemies = new List<EnemyBunch>();
-            int enemyCount = Random.Range(minEnemiesPerWave, maxEnemiesPerWave);
-            int addedCount = 0;
-            for (int i = 0; i < enemyCount; i++)
-            {
-                GameObject randomEnemyPrefab = enemyPrefabs.PickRandom();
-                for (int j = 0; j < enemyCount - addedCount; j++)
-                {
-                    //int amount = 1;
-                    int amount = waveNumber > 10 ? Random.Range(1, enemyCount - addedCount + 1) : 1;
-                    addedCount += amount;
-                    enemies.Add(new EnemyBunch { count = amount, enemyPrefab = randomEnemyPrefab });
-                }
-            }
-
-            // Exponentially increase the enemy count based on the wave number
-            int exponentialFactor = (int)Mathf.Pow(2, waveNumber);
-            for (int i = 0; i < enemies.Count; i++)
-            {
-                enemies[i].count *= exponentialFactor;
-            }
-            spawnInterval -= 0.05f * waveNumber < 0.25 ? 0.05f * waveNumber : 0.25f;
-            currentWave = new Wave(enemies, spawnInterval);
-        }
-
+        
         public void SkipWave()
         {
             _controller.Events.SendResetWave(null);
