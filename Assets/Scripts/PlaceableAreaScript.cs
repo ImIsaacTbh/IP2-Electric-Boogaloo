@@ -19,6 +19,7 @@ public class PlaceableAreaScript : MonoBehaviour
         if(other.gameObject.tag == "PreviewTower")
         {
             TowerSelector.instance.canSpawn = false;
+            RangeLine.instance.towerLineRenderer.material.color = Color.red;
         }
 
     }
@@ -28,6 +29,7 @@ public class PlaceableAreaScript : MonoBehaviour
         if(other.gameObject.tag == "PreviewTower")
         {
             TowerSelector.instance.canSpawn = true;
+            RangeLine.instance.towerLineRenderer.material.color = Color.white;
         }
     }
 }

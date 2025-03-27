@@ -20,8 +20,11 @@ public class TowerSpawning : MonoBehaviour
             var dropRay = Camera.main.ScreenPointToRay(Input.mousePosition);
             bool cast = Physics.Raycast(dropRay.origin, dropRay.direction, out var hit, 9999, 1 << 6);
             var succHit = hit.point;
+            succHit.y += 2.1225f;
 
             var turret = Instantiate(TowerSelector.instance.activeTower, succHit, transform.rotation);
+            turret.tag = "ActiveTower";
+            turret.GetComponent<LineRenderer>().enabled = false;
             TowerManager.instance.activeTowers.Add(turret);
             TowerSelector.instance.spawnMode = false;
             

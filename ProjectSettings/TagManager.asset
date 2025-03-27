@@ -10,6 +10,7 @@ TagManager:
   - feedback
   - PreviewTower
   - UnPlaceable
+  - ActiveTower
   layers:
   - Default
   - TransparentFX
