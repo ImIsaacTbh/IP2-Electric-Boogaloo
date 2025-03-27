@@ -52,7 +52,6 @@ public class LoadingScreen_1 : MonoBehaviour
     {
         loading_Bar_Holder.SetActive(true);
         progress_Value = 0f;
-        Time.timeScale = 0f;
         SceneManager.LoadScene(sceneName);
     }
 
