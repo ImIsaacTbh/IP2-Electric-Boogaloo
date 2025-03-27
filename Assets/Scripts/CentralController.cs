@@ -39,6 +39,11 @@ public class GlobalController : MonoBehaviour
     [Header("Enemy Controls")]
     public float _enemyTickRate = 30f;
 
+    [Header("Enemy Damage")]
+    public float enemyDamage = 10f;
+    public float enemyFastDamage = 5f;
+    public float enemySlowDamage = 20f;
+
     public float _globalEnemySpawnRate = 0.5f;
 
     //Tracking variables
@@ -82,7 +87,7 @@ public class GlobalController : MonoBehaviour
         }
     }
 
-    public void DecreaseHealth(int amount)
+    public void DecreaseHealth(float amount)
     {
         _health -= amount;
         if (_health <= 0)
@@ -91,7 +96,7 @@ public class GlobalController : MonoBehaviour
             assets.FirstOrDefault(x => x.name == "GameOver").SetActive(true);
         }
     }
-    public void IncreaseHealth(int amount)
+    public void IncreaseHealth(float amount)
     {
         _health += amount;
     }
