@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public enum TowerMode
 {
@@ -62,7 +63,6 @@ public class TowerFunction : MonoBehaviour
                     print("firing bullet");
                     GameObject proj = Instantiate(projectile);
                     proj.transform.position = projSpawnPos;
-                    proj.transform.localScale = new Vector3(0.15f, 0.15f, 0.15f);
                     proj.layer = 8;
                     Rigidbody rb = proj.GetComponentInChildren<Rigidbody>();
                     Vector3 target = closest.Key.transform.position;
@@ -84,6 +84,8 @@ public class TowerFunction : MonoBehaviour
                 }
                 else
                 {
+                    GameObject proj = Instantiate(projectile);
+                    proj.transform.position = projSpawnPos;
                     Destroy(closest.Key);
                 }
             }
