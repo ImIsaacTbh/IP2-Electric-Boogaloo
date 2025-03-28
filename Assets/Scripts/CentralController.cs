@@ -20,6 +20,7 @@ public class GlobalController : MonoBehaviour
     [Header("Central Controls")] 
     public float _centralTickRate = 60f;
     public bool _isGamePaused;
+    public float _maxhealth;
     public float _health;
     public float _coins;
 
@@ -67,6 +68,7 @@ public class GlobalController : MonoBehaviour
     {
         Debug.Log("Started Central Controller");
         Events.TryStartWave += TryStartWave;
+        _health =  _maxhealth;
     }
     void Update()
     {

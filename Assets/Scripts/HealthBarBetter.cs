@@ -28,22 +28,22 @@ public class HealthBarBetter : MonoBehaviour
     private void Start()
     {
 
-        image.color = gradient.Evaluate(target);
+        image.color = gradient.Evaluate(target); //sets the  image fill colour to the value on the gradient
         
     }
 
     private void Update()
     {
-        UpdateHealthBar();
+        UpdateHealthBar();  //updates the health bar
         healthTXT.text = "Health: " + controller._health.ToString();
 
         if (entity)
-        transform.rotation = Quaternion.LookRotation(transform.position - cam.transform.position);
+        transform.rotation = Quaternion.LookRotation(transform.position - cam.transform.position); //for putting health bars on enemy's if needed
         
     }
     public void UpdateHealthBar()
     {
-        target = controller._health / 100;
+        target = controller._health / controller._maxhealth;
         drainHealthBar = StartCoroutine(DrainHealthBar());
         CheckGradient();
     }
