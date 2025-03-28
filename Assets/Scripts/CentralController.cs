@@ -46,6 +46,7 @@ public class GlobalController : MonoBehaviour
 
     public float _globalEnemySpawnRate = 0.5f;
 
+    //public  HealthBarBetter healthBarBetter;
     //Tracking variables
     public static float _timeSinceLastCentralTick;
 
@@ -69,6 +70,8 @@ public class GlobalController : MonoBehaviour
     }
     void Update()
     {
+        //healthBarBetter.UpdateHealthBar(100, _health);
+
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
         _timeSinceLastCentralTick += Time.deltaTime;
@@ -90,6 +93,7 @@ public class GlobalController : MonoBehaviour
     public void DecreaseHealth(float amount)
     {
         _health -= amount;
+
         if (_health <= 0)
         {
             Events.SendPause(EventArgs.Empty);
