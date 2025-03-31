@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
+
 public class TowerSelector : MonoBehaviour
 {
     public static TowerSelector instance;
@@ -31,12 +33,20 @@ public class TowerSelector : MonoBehaviour
     {
         coinsText.text = coins.ToString();
 
-        if (spawnMode)
+        if (spawnMode && SceneManager.GetActiveScene().name != "ProdSceneButterNewMap")
         {
             var dropRay = Camera.main.ScreenPointToRay(Input.mousePosition);
             bool cast = Physics.Raycast(dropRay.origin, dropRay.direction, out var hit, 9999, 1 << 6);
             var succHit = hit.point;
             succHit.y += 2.1225f;
+            previewTower.transform.position = cast ? succHit : new Vector3(69, 69, 69);
+        }
+        else if(spawnMode)
+        {
+            var dropRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+            bool cast = Physics.Raycast(dropRay.origin, dropRay.direction, out var hit, 9999, 1 << 10);
+            var succHit = hit.point;
+            succHit.y += 1.1225f;
             previewTower.transform.position = cast ? succHit : new Vector3(69, 69, 69);
         }
 
@@ -61,12 +71,22 @@ public class TowerSelector : MonoBehaviour
                 print("No tower selected");
                 break;
         }
-        if (coins >= activeTower.GetComponent<TowerFunction>().TowerValue)
+        if (coins >= activeTower.GetComponent<TowerFunction>().TowerValue && SceneManager.GetActiveScene().name != "ProdSceneButterNewMap")
         {
             spawnMode = true;
             print(activeTower.gameObject.name);
             previewTower = Instantiate(activeTower, floorScript.worldPosition, transform.rotation);
             previewTower.transform.Rotate(-28, 0, 0);
+            previewTower.tag = "PreviewTower";
+            previewTower.GetComponent<TowerFunction>().enabled = false;
+        }
+        else if (coins >= activeTower.GetComponent<TowerFunction>().TowerValue)
+        {
+            spawnMode = true;
+            print(activeTower.gameObject.name);
+            previewTower = Instantiate(activeTower, floorScript.worldPosition, transform.rotation);
+            previewTower.transform.Rotate(-28, 0, 0);
+            previewTower.transform.localScale *= 0.5f;
             previewTower.tag = "PreviewTower";
             previewTower.GetComponent<TowerFunction>().enabled = false;
         }
