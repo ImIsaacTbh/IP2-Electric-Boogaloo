@@ -18,6 +18,7 @@ namespace Assets.Enemy.Scripts
         public abstract float Damage { get; set; }
         public abstract float Range { get; set; }
         public abstract float AttackSpeed { get; set; }
+        public abstract float MovementSpeed { get; set; }
 
 
         public void Start()

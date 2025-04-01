@@ -8,18 +8,19 @@ using UnityEngine.AI;
 
 namespace Assets.Enemy.Scripts.EnemyExample
 {
-    public class EnemyBase : Enemy
+    public class Mantis : Enemy
     {
-        public override string Name { get; set; } = "ExampleEnemy";
-        public override float Health { get; set; } = 100;
+        public override string Name { get; set; } = "Mantis";
+        public override float Health { get; set; } = 125f;
         public override int Cost { get; set; } = 1;
         public override float Damage { get; set; } = 5;
         public override float Range { get; set; } = 0;
         public override float AttackSpeed { get; set; } = 0;
-        public override float MovementSpeed { get; set; } = 3.5f;
+        public override float MovementSpeed { get; set; } = 4.5f;
+        
         private int currentCp = 1;
 
-        public EnemyBase(float healthMult, float damageMult)
+        public Mantis(float healthMult, float damageMult)
         {
             Health *= healthMult;
             Damage = (int)(Damage * damageMult);
@@ -31,8 +32,9 @@ namespace Assets.Enemy.Scripts.EnemyExample
             _controller.Events.EnemyTick += OnEnemyTick;
             _controller.Events.Pause += DoPause;
             //_controller.Events.EnemyTarget += OnEnemyTarget;
+            GetComponentInChildren<NavMeshAgent>().angularSpeed *= 2;
+            GetComponentInChildren<NavMeshAgent>().speed *= 2f;
             GetComponentInChildren<NavMeshAgent>().enabled = true;
-            //GetComponentInChildren<NavMeshAgent>().speed = MovementSpeed;
             GetComponentInChildren<NavMeshAgent>().destination = MapHandler.instance._checkpointList[0].transform.position;
         }
 
