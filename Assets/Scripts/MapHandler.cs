@@ -13,7 +13,6 @@ namespace Assets
     {
         public static MapHandler instance = null;
         public List<Collider> _checkpointList = new List<Collider>();
-        public NavMeshData _navData;
         public List<GameObject> _switches = new List<GameObject>();
         public Vector3 _startPoint;
         public Collider _endPoint;

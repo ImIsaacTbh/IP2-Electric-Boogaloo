@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Assets;
+using Assets.Enemy.Scripts;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -24,6 +26,7 @@ public class TowerFunction : MonoBehaviour
     public float projMotionLaunchAngle;
     public string customBehaviour;
     public int TowerValue;
+    public float Range = 20f;
 
     private Vector3 projSpawnPos;
     // Start is called before the first frame update
@@ -85,8 +88,8 @@ public class TowerFunction : MonoBehaviour
                 else
                 {
                     GameObject proj = Instantiate(projectile);
-                    proj.transform.position = projSpawnPos;
-                    Destroy(closest.Key);
+                    proj.AddComponent<StandardBullet>().target = closest.Key;
+
                 }
             }
             
@@ -103,26 +106,26 @@ public class TowerFunction : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "Enemy")
-        {
-            inRangeEnemies.Add(other.gameObject);
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.tag == "Enemy")
-        {
-            inRangeEnemies.Remove(other.gameObject);
-        }
-    }
-
     // Update is called once per frame
     void Update()
     {
+        foreach (GameObject g in EnemyController.instance._enemiesInPlay)
+        {
+            if (Vector3.Distance(g.transform.position, transform.position) > Range)
+            {
+                inRangeEnemies.Add(g);
+            }
+            else
+            {
+                try
+                {
+                    inRangeEnemies.Remove(g);
+                }
+                catch
+                { }
 
+            }
+        }
     }
 }
 
@@ -131,5 +134,23 @@ public class LookForward : MonoBehaviour
     private void Update()
     {
         transform.rotation = Quaternion.LookRotation(GetComponent<Rigidbody>().velocity);
+    }
+}
+
+public class StandardBullet : MonoBehaviour
+{
+    public GameObject target;
+    private void Update()
+    {
+        transform.LookAt(target.transform);
+        GetComponent<Rigidbody>().velocity = transform.forward * 100f * Time.deltaTime;
+    }
+
+    void OnCollisionEnter(Collision c)
+    {
+        if (c.collider.tag == "Enemy")
+        {
+            Destroy(c.gameObject);
+        }
     }
 }

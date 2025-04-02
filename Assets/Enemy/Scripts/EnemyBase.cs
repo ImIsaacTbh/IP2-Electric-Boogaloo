@@ -16,7 +16,7 @@ namespace Assets.Enemy.Scripts.EnemyExample
         public override float Damage { get; set; } = 5;
         public override float Range { get; set; } = 0;
         public override float AttackSpeed { get; set; } = 0;
-
+        public override float MovementSpeed { get; set; } = 3.5f;
         private int currentCp = 1;
 
         public EnemyBase(float healthMult, float damageMult)
@@ -32,6 +32,7 @@ namespace Assets.Enemy.Scripts.EnemyExample
             _controller.Events.Pause += DoPause;
             //_controller.Events.EnemyTarget += OnEnemyTarget;
             GetComponentInChildren<NavMeshAgent>().enabled = true;
+            //GetComponentInChildren<NavMeshAgent>().speed = MovementSpeed;
             GetComponentInChildren<NavMeshAgent>().destination = MapHandler.instance._checkpointList[0].transform.position;
         }
 
