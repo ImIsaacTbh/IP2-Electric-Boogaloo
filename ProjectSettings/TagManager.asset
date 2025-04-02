@@ -11,6 +11,8 @@ TagManager:
   - PreviewTower
   - UnPlaceable
   - ActiveTower
+  - Enemyfast
+  - Enemyslow
   layers:
   - Default
   - TransparentFX

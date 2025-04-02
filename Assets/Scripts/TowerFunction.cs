@@ -87,22 +87,12 @@ public class TowerFunction : MonoBehaviour
                 }
                 else
                 {
+                    print("shooting the thing");
                     GameObject proj = Instantiate(projectile);
                     proj.AddComponent<StandardBullet>().target = closest.Key;
-
+                    proj.SetActive(true);
                 }
             }
-            
-            
-            // try
-            // {
-            //
-            // }
-            // catch
-            // {
-            //     inRangeEnemies.Remove(closest.Key);
-            //     print("Tried to destroy null object");
-            // }
         }
     }
 
@@ -111,9 +101,13 @@ public class TowerFunction : MonoBehaviour
     {
         foreach (GameObject g in EnemyController.instance._enemiesInPlay)
         {
-            if (Vector3.Distance(g.transform.position, transform.position) > Range)
+            if (Vector3.Distance(g.transform.position, transform.position) <= Range)
             {
-                inRangeEnemies.Add(g);
+                print("added enemy to list");
+                if (!inRangeEnemies.Contains(g))
+                {
+                    inRangeEnemies.Add(g);
+                }
             }
             else
             {

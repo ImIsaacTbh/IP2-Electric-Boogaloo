@@ -27,7 +27,7 @@ public class HealthBarBetter : MonoBehaviour
 
     private void Start()
     {
-
+        controller = GlobalController.instance;
         image.color = gradient.Evaluate(target); //sets the  image fill colour to the value on the gradient
         
     }
