@@ -14,7 +14,6 @@ public class HealthController : MonoBehaviour
     public Sprite[] healthBarImages;
     public Image healthBar;
 
-
      
     private void Update()
     {
@@ -22,6 +21,7 @@ public class HealthController : MonoBehaviour
         if (controller._health == 100)
         {
             healthBar.sprite = healthBarImages[0];
+            
         }
         if (controller._health < 100 && controller._health >= 70)
         {

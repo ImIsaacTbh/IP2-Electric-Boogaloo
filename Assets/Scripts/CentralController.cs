@@ -22,6 +22,7 @@ public class GlobalController : MonoBehaviour
     [Header("Central Controls")] 
     public float _centralTickRate = 60f;
     public bool _isGamePaused;
+    public float _maxhealth;
     public float _health;
     public float _coins;
 
@@ -48,6 +49,7 @@ public class GlobalController : MonoBehaviour
 
     public float _globalEnemySpawnRate = 0.5f;
 
+    //public  HealthBarBetter healthBarBetter;
     //Tracking variables
     public static float _timeSinceLastCentralTick;
 
@@ -68,9 +70,12 @@ public class GlobalController : MonoBehaviour
     {
         Debug.Log("Started Central Controller");
         Events.TryStartWave += TryStartWave;
+        _health =  _maxhealth;
     }
     void Update()
     {
+        //healthBarBetter.UpdateHealthBar(100, _health);
+
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
         _timeSinceLastCentralTick += Time.deltaTime;
@@ -92,6 +97,7 @@ public class GlobalController : MonoBehaviour
     public void DecreaseHealth(float amount)
     {
         _health -= amount;
+
         if (_health <= 0)
         {
             Events.SendPause(EventArgs.Empty);
