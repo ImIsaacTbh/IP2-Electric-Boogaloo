@@ -17,7 +17,7 @@ public class TowerSelector : MonoBehaviour
     public GameObject notEnoughCoins;
     public GameObject cannotPlace;
     public TextMeshPro coinsText;
-    public int coins;
+    public float coins;
     public bool canSpawn;
 
 
@@ -38,7 +38,7 @@ public class TowerSelector : MonoBehaviour
             var dropRay = Camera.main.ScreenPointToRay(Input.mousePosition);
             bool cast = Physics.Raycast(dropRay.origin, dropRay.direction, out var hit, 9999, 1 << 6);
             var succHit = hit.point;
-            succHit.y += 2.1225f;
+            //succHit.y += 2.1225f;
             previewTower.transform.position = cast ? succHit : new Vector3(69, 69, 69);
         }
         else if(spawnMode)

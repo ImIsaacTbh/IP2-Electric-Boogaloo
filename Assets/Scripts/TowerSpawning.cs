@@ -15,15 +15,17 @@ public class TowerSpawning : MonoBehaviour
         if (TowerSelector.instance.spawnMode && TowerSelector.instance.canSpawn && SceneManager.GetActiveScene().name != "ProdSceneButterNewMap")
         {
             int towerCost = TowerSelector.instance.previewTower.GetComponent<TowerFunction>().TowerValue;
-            TowerSelector.instance.coins -= towerCost;
+            float newTowerCost = towerCost;
+            newTowerCost += towerCost * GlobalUpgrades.instance.tcrPercentage;
+            TowerSelector.instance.coins -= newTowerCost;
 
             Destroy(TowerSelector.instance.previewTower);
             var dropRay = Camera.main.ScreenPointToRay(Input.mousePosition);
             bool cast = Physics.Raycast(dropRay.origin, dropRay.direction, out var hit, 9999, 1 << 6);
             var succHit = hit.point;
-            succHit.y += 2.1225f;
+            //succHit.y += 2.1225f;
 
-            var turret = Instantiate(TowerSelector.instance.activeTower, succHit, transform.rotation);
+            var turret = Instantiate(TowerSelector.instance.activeTower, succHit, new Quaternion(transform.rotation.w, transform.rotation.x + 180, transform.rotation.y, transform.rotation.z));
             turret.tag = "ActiveTower";
             turret.GetComponent<LineRenderer>().enabled = false;
             TowerManager.instance.activeTowers.Add(turret);
