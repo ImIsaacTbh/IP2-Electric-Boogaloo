@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Assets;
 using Assets.Enemy.Scripts;
+using UnityEditor.IMGUI.Controls;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -26,7 +27,7 @@ public class TowerFunction : MonoBehaviour
     public float projMotionLaunchAngle;
     public string customBehaviour;
     public int TowerValue;
-    public float Range = 20f;
+    public float Range = 5f;
 
     private Vector3 projSpawnPos;
     // Start is called before the first frame update
@@ -61,6 +62,7 @@ public class TowerFunction : MonoBehaviour
 
             if (closest.Key != null)
             {
+                transform.LookAt(closest.Key.transform);
                 if (ProjMotion)
                 {
                     print("firing bullet");
@@ -88,7 +90,7 @@ public class TowerFunction : MonoBehaviour
                 else
                 {
                     print("shooting the thing");
-                    GameObject proj = Instantiate(projectile);
+                    GameObject proj = Instantiate(projectile, transform.GetChild(2).transform);
                     proj.AddComponent<StandardBullet>().target = closest.Key;
                     proj.SetActive(true);
                 }
@@ -103,9 +105,9 @@ public class TowerFunction : MonoBehaviour
         {
             if (Vector3.Distance(g.transform.position, transform.position) <= Range)
             {
-                print("added enemy to list");
                 if (!inRangeEnemies.Contains(g))
                 {
+                    print("added enemy to list");
                     inRangeEnemies.Add(g);
                 }
             }
@@ -137,14 +139,16 @@ public class StandardBullet : MonoBehaviour
     private void Update()
     {
         transform.LookAt(target.transform);
-        GetComponent<Rigidbody>().velocity = transform.forward * 100f * Time.deltaTime;
+        GetComponent<Rigidbody>().velocity = transform.forward * 1500f * Time.deltaTime;
     }
 
-    void OnCollisionEnter(Collision c)
+    void OnTriggerEnter(Collider c)
     {
-        if (c.collider.tag == "Enemy")
+        if (c.tag.Contains("Enemy") && c.tag != "EnemyKillVolume")
         {
             Destroy(c.gameObject);
+            Destroy(this.gameObject);
         }
+        
     }
 }

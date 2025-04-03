@@ -11,7 +11,7 @@ public class LoadingScreen : MonoBehaviour
     [SerializeField]
     private GameObject loading_Bar_Holder;
 
-    [SerializeField]
+    [SerializeField]    
     private Image loading_Bar_Progress;
 
     private float progress_Value = 1.1f;
@@ -75,6 +75,6 @@ public class LoadingScreen : MonoBehaviour
     IEnumerator LoadingSomeLevel()
     {
         yield return new WaitForSeconds(load_level_Time);
-        LoadLevel("PresentScnee");
+        LoadLevel("PresentScene");
     }
 }
