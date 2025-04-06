@@ -74,6 +74,6 @@ public class LoadingScreen_1 : MonoBehaviour
     IEnumerator LoadingSomeLevel()
     {
         yield return new WaitForSeconds(load_level_Time);
-        LoadLevel("PresentScnee");
+        LoadLevel("ProdSceneButterNewMapNathanTest");
     }
 }
