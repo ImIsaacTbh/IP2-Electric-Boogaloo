@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Assets;
 using Assets.Enemy.Scripts;
 using UnityEngine;
@@ -92,17 +93,47 @@ public class TowerFunction : MonoBehaviour
 
                 }
             }
-            
-            
-            // try
-            // {
-            //
-            // }
-            // catch
-            // {
-            //     inRangeEnemies.Remove(closest.Key);
-            //     print("Tried to destroy null object");
-            // }
+        }
+        else if (mode == TowerMode.Last)
+        {
+            GameObject closest;
+            List<GameObject> list = new List<GameObject>();
+            foreach (GameObject g in inRangeEnemies)
+            {
+                list.Add(g);
+            }
+            list.Sort((x, y) => x.GetComponent<NavMeshAgent>().remainingDistance.CompareTo(y.GetComponent<NavMeshAgent>().remainingDistance));
+            closest = list.First();
+            if (ProjMotion)
+            {
+                print("firing bullet");
+                GameObject proj = Instantiate(projectile);
+                proj.transform.position = projSpawnPos;
+                proj.layer = 8;
+                Rigidbody rb = proj.GetComponentInChildren<Rigidbody>();
+                Vector3 target = closest.transform.position;
+
+                Vector3 direction = target - projSpawnPos;
+                float h = direction.y;
+                direction.y = 0;
+                float distance = direction.magnitude;
+                float a = projMotionLaunchAngle * Mathf.Deg2Rad;
+                direction.y = distance * Mathf.Tan(a);
+                distance += h / Mathf.Tan(a);
+
+                // Calculate the velocity
+                float velocity = Mathf.Sqrt(distance * Physics.gravity.magnitude / Mathf.Sin(2 * a));
+                rb.velocity = velocity * direction.normalized;
+
+                proj.AddComponent<LookForward>();
+                proj.SetActive(true);
+            }
+            else
+            {
+                GameObject proj = Instantiate(projectile);
+                proj.AddComponent<StandardBullet>().target = closest;
+
+            }
         }
     }
 
