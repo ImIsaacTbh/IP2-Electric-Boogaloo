@@ -28,7 +28,9 @@ public class TowerFunction : MonoBehaviour
     public bool ProjMotion;
     public float projMotionLaunchAngle;
     public string customBehaviour;
+    public float firerate = 1f;
     public int TowerValue;
+    public float Damage;
     public float Range = 5f;
 
     private Vector3 projSpawnPos;
@@ -40,9 +42,11 @@ public class TowerFunction : MonoBehaviour
         projectile = transform.GetChild(1).gameObject;
         projSpawnPos = transform.GetChild(2).gameObject.transform.position;
     }
-
+    int tickCount = 0;
     void OnTowerTick(object sender, EventArgs e)
     {
+        tickCount++;
+        if (tickCount % firerate != 0) return;
         if (mode == TowerMode.Closest)
         {
             KeyValuePair<GameObject, float> closest = new KeyValuePair<GameObject, float>(null, Mathf.Infinity);
@@ -64,7 +68,9 @@ public class TowerFunction : MonoBehaviour
                     }
                 }
             }
+#pragma warning disable CS0168
             catch (InvalidOperationException ex)
+#pragma warning restore CS0168
             {
             }
 
@@ -73,6 +79,7 @@ public class TowerFunction : MonoBehaviour
                 transform.LookAt(closest.Key.transform);
                 if (ProjMotion)
                 {
+#warning make mortar
                     print("firing bullet");
                     GameObject proj = Instantiate(projectile);
                     proj.transform.position = projSpawnPos;
@@ -101,6 +108,7 @@ public class TowerFunction : MonoBehaviour
                     GameObject proj = Instantiate(projectile);
                     proj.transform.position = transform.position;
                     proj.AddComponent<StandardBullet>().target = closest.Key;
+                    proj.GetComponent<StandardBullet>().sender = this;
                     proj.SetActive(true);
                 }
             }
@@ -145,6 +153,7 @@ public class LookForward : MonoBehaviour
 public class StandardBullet : MonoBehaviour
 {
     public GameObject target;
+    public TowerFunction sender;
     private void Update()
     {
         transform.position += (target.transform.position - transform.position).normalized * Time.deltaTime * 100;
@@ -152,21 +161,23 @@ public class StandardBullet : MonoBehaviour
 
     void OnTriggerEnter(Collider c)
     {
-        if (c.tag.Contains("Enemy") && c.tag != "EnemyKillVolume")
+        try
         {
-            Enemy t = c.GetComponent<Enemy>();
-            print("tower cost " + t.Cost);
-            TowerSelector.instance.coins += t.Cost;
-            // try
-            // {
-            //     
-            //     TowerSelector.instance.coins += c.GetComponent<Enemy>().Cost;
-            // }
-            // catch (Exception ex)
-            // {
-            //     Debug.Log(ex);
-            // }
-            Destroy(c.gameObject);
+            if (c.tag.Contains("Enemy") && c.tag != "EnemyKillVolume")
+            {
+                Enemy t = c.GetComponent<Enemy>();
+
+                t.Health -= sender.Damage;
+                if (t.Health < 0)
+                {
+                    TowerSelector.instance.coins += t.Cost;
+                    Destroy(c.gameObject);
+                }
+                Destroy(this.gameObject);
+            }
+        }
+        catch (MissingReferenceException ex)
+        {
             Destroy(this.gameObject);
         }
         

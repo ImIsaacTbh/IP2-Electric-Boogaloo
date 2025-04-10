@@ -7,7 +7,9 @@ public class HealthBarBetter : MonoBehaviour
 {
     public Image image;
     public Image imageMask;
+#pragma warning disable CS0649
     private Camera cam;
+#pragma warning restore CS0649
 
     private float target = 1f;
 

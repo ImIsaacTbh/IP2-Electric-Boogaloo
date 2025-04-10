@@ -1104,9 +1104,9 @@ MonoBehaviour:
   spawnMode: 0
   towers:
   - {fileID: 1015901468167407550, guid: 8cd05076f9e58fa40898b394eaac0e10, type: 3}
-  - {fileID: 434558671774914516, guid: fa1245373df770243957bdf1abe7ed40, type: 3}
-  - {fileID: 2578581932235523049, guid: 8f6f53626c78f434e8065587df2ad172, type: 3}
-  - {fileID: 7618376868819406074, guid: 4a57a0ab7259df347801f816c70ec4dc, type: 3}
+  - {fileID: 6117241636753150420, guid: 315e9773db2f9dd43898f882c7696884, type: 3}
+  - {fileID: 4384887679037405449, guid: df9098383d6419d47b0f1ae29e99ce62, type: 3}
+  - {fileID: 509196352489567619, guid: 6cd8a9107243f2c4c98de67dc5486ba5, type: 3}
   activeTower: {fileID: 0}
   previewTower: {fileID: 0}
   floor: {fileID: 919132149603887544}
