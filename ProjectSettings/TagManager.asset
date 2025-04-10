@@ -13,6 +13,7 @@ TagManager:
   - ActiveTower
   - Enemyfast
   - Enemyslow
+  - EnemyFast
   layers:
   - Default
   - TransparentFX
