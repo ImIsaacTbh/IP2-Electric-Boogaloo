@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Assets;
 using Assets.Enemy.Scripts;
+using Assets.Enemy.Scripts.EnemyExample;
 using UnityEditor.IMGUI.Controls;
 using UnityEngine;
 using UnityEngine.AI;
@@ -26,7 +28,9 @@ public class TowerFunction : MonoBehaviour
     public bool ProjMotion;
     public float projMotionLaunchAngle;
     public string customBehaviour;
+    public float firerate = 1f;
     public int TowerValue;
+    public float Damage;
     public float Range = 5f;
 
     private Vector3 projSpawnPos;
@@ -38,26 +42,36 @@ public class TowerFunction : MonoBehaviour
         projectile = transform.GetChild(1).gameObject;
         projSpawnPos = transform.GetChild(2).gameObject.transform.position;
     }
-
+    int tickCount = 0;
     void OnTowerTick(object sender, EventArgs e)
     {
+        tickCount++;
+        if (tickCount % firerate != 0) return;
         if (mode == TowerMode.Closest)
         {
             KeyValuePair<GameObject, float> closest = new KeyValuePair<GameObject, float>(null, Mathf.Infinity);
-            foreach (GameObject g in inRangeEnemies)
+            try
             {
-                try
+                foreach (GameObject g in inRangeEnemies)
                 {
-                    if (Vector3.Distance(gameObject.transform.position, g.transform.position) is float distance &&
-                        distance < closest.Value)
+                    try
                     {
-                        closest = new KeyValuePair<GameObject, float>(g, distance);
+                        if (Vector3.Distance(gameObject.transform.position, g.transform.position) is float distance &&
+                            distance < closest.Value)
+                        {
+                            closest = new KeyValuePair<GameObject, float>(g, distance);
+                        }
+                    }
+                    catch
+                    {
+                        inRangeEnemies.Remove(g);
                     }
                 }
-                catch
-                {
-                    inRangeEnemies.Remove(g);
-                }
+            }
+#pragma warning disable CS0168
+            catch (InvalidOperationException ex)
+#pragma warning restore CS0168
+            {
             }
 
             if (closest.Key != null)
@@ -65,6 +79,7 @@ public class TowerFunction : MonoBehaviour
                 transform.LookAt(closest.Key.transform);
                 if (ProjMotion)
                 {
+#warning make mortar
                     print("firing bullet");
                     GameObject proj = Instantiate(projectile);
                     proj.transform.position = projSpawnPos;
@@ -90,8 +105,10 @@ public class TowerFunction : MonoBehaviour
                 else
                 {
                     print("shooting the thing");
-                    GameObject proj = Instantiate(projectile, transform.GetChild(2).transform);
+                    GameObject proj = Instantiate(projectile);
+                    proj.transform.position = transform.position;
                     proj.AddComponent<StandardBullet>().target = closest.Key;
+                    proj.GetComponent<StandardBullet>().sender = this;
                     proj.SetActive(true);
                 }
             }
@@ -136,17 +153,31 @@ public class LookForward : MonoBehaviour
 public class StandardBullet : MonoBehaviour
 {
     public GameObject target;
+    public TowerFunction sender;
     private void Update()
     {
-        transform.LookAt(target.transform);
-        GetComponent<Rigidbody>().velocity = transform.forward * 1500f * Time.deltaTime;
+        transform.position += (target.transform.position - transform.position).normalized * Time.deltaTime * 100;
     }
 
     void OnTriggerEnter(Collider c)
     {
-        if (c.tag.Contains("Enemy") && c.tag != "EnemyKillVolume")
+        try
         {
-            Destroy(c.gameObject);
+            if (c.tag.Contains("Enemy") && c.tag != "EnemyKillVolume")
+            {
+                Enemy t = c.GetComponent<Enemy>();
+
+                t.Health -= sender.Damage;
+                if (t.Health < 0)
+                {
+                    TowerSelector.instance.coins += t.Cost;
+                    Destroy(c.gameObject);
+                }
+                Destroy(this.gameObject);
+            }
+        }
+        catch (MissingReferenceException ex)
+        {
             Destroy(this.gameObject);
         }
         

@@ -14,8 +14,9 @@ namespace Assets.Enemy.Scripts
         public List<GameObject> gooberPrefabs;
 
         public float _timeSinceLastGooberSpawn = 0f;
-
+#pragma warning disable CS0414
         private int shpeeeeed = 0;
+#pragma warning restore CS0414
 
         private void Start()
         {
