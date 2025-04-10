@@ -12,15 +12,19 @@ namespace Assets.Enemy.Scripts.EnemyExample
     {
         public override string Name { get; set; } = "ExampleEnemy";
         public override float Health { get; set; } = 100;
-        public override int Cost { get; set; } = 1;
+        public override int Cost { get; set; } = 4;
         public override float Damage { get; set; } = 5;
         public override float Range { get; set; } = 0;
         public override float AttackSpeed { get; set; } = 0;
         public override float MovementSpeed { get; set; } = 3.5f;
+        [SerializeField]
         private int currentCp = 1;
 
         public EnemyBase(float healthMult, float damageMult)
         {
+            Name = "ExampleEnemy";
+            Cost = 4;
+            
             Health *= healthMult;
             Damage = (int)(Damage * damageMult);
         }

@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Assets;
 using Assets.Enemy.Scripts;
+using Assets.Enemy.Scripts.EnemyExample;
 using UnityEditor.IMGUI.Controls;
 using UnityEngine;
 using UnityEngine.AI;
@@ -44,20 +46,26 @@ public class TowerFunction : MonoBehaviour
         if (mode == TowerMode.Closest)
         {
             KeyValuePair<GameObject, float> closest = new KeyValuePair<GameObject, float>(null, Mathf.Infinity);
-            foreach (GameObject g in inRangeEnemies)
+            try
             {
-                try
+                foreach (GameObject g in inRangeEnemies)
                 {
-                    if (Vector3.Distance(gameObject.transform.position, g.transform.position) is float distance &&
-                        distance < closest.Value)
+                    try
                     {
-                        closest = new KeyValuePair<GameObject, float>(g, distance);
+                        if (Vector3.Distance(gameObject.transform.position, g.transform.position) is float distance &&
+                            distance < closest.Value)
+                        {
+                            closest = new KeyValuePair<GameObject, float>(g, distance);
+                        }
+                    }
+                    catch
+                    {
+                        inRangeEnemies.Remove(g);
                     }
                 }
-                catch
-                {
-                    inRangeEnemies.Remove(g);
-                }
+            }
+            catch (InvalidOperationException ex)
+            {
             }
 
             if (closest.Key != null)
@@ -90,7 +98,8 @@ public class TowerFunction : MonoBehaviour
                 else
                 {
                     print("shooting the thing");
-                    GameObject proj = Instantiate(projectile, transform.GetChild(2).transform);
+                    GameObject proj = Instantiate(projectile);
+                    proj.transform.position = transform.position;
                     proj.AddComponent<StandardBullet>().target = closest.Key;
                     proj.SetActive(true);
                 }
@@ -138,14 +147,25 @@ public class StandardBullet : MonoBehaviour
     public GameObject target;
     private void Update()
     {
-        transform.LookAt(target.transform);
-        GetComponent<Rigidbody>().velocity = transform.forward * 1500f * Time.deltaTime;
+        transform.position += (target.transform.position - transform.position).normalized * Time.deltaTime * 100;
     }
 
     void OnTriggerEnter(Collider c)
     {
         if (c.tag.Contains("Enemy") && c.tag != "EnemyKillVolume")
         {
+            Enemy t = c.GetComponent<Enemy>();
+            print("tower cost " + t.Cost);
+            TowerSelector.instance.coins += t.Cost;
+            // try
+            // {
+            //     
+            //     TowerSelector.instance.coins += c.GetComponent<Enemy>().Cost;
+            // }
+            // catch (Exception ex)
+            // {
+            //     Debug.Log(ex);
+            // }
             Destroy(c.gameObject);
             Destroy(this.gameObject);
         }

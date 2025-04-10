@@ -74,8 +74,6 @@ public class GlobalController : MonoBehaviour
     }
     void Update()
     {
-        //healthBarBetter.UpdateHealthBar(100, _health);
-
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
         _timeSinceLastCentralTick += Time.deltaTime;

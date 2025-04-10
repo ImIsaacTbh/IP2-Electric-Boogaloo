@@ -12,7 +12,7 @@ namespace Assets.Enemy.Scripts.EnemyExample
     {
         public override string Name { get; set; } = "Mantis";
         public override float Health { get; set; } = 125f;
-        public override int Cost { get; set; } = 1;
+        public override int Cost { get; set; } = 8;
         public override float Damage { get; set; } = 5;
         public override float Range { get; set; } = 0;
         public override float AttackSpeed { get; set; } = 0;
