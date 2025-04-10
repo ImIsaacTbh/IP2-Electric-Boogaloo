@@ -5,9 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Assets;
 using Assets.Enemy.Scripts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -74,8 +71,6 @@ public class GlobalController : MonoBehaviour
     }
     void Update()
     {
-        //healthBarBetter.UpdateHealthBar(100, _health);
-
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
         _timeSinceLastCentralTick += Time.deltaTime;

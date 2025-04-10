@@ -3408,6 +3408,7 @@ MonoBehaviour:
   - {fileID: 165265816}
   _centralTickRate: 60
   _isGamePaused: 0
+  _maxhealth: 0
   _health: 0
   _coins: 0
   volume: 0
@@ -3862,12 +3863,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 892c3c2ccf7b17d4e8b81886bab26cad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  asiTotaltext: {fileID: 0}
+  tcrTotaltext: {fileID: 0}
+  esrTotaltext: {fileID: 0}
   attackSpeedIncrease: 0
   towerCostReduction: 0
   enemySpeedReduction: 0
   asiPercentage: 0
   tcrPercentage: 0
-  espPercentage: 0
+  esrPercentage: 0
 --- !u!1 &466368682
 GameObject:
   m_ObjectHideFlags: 0
@@ -5762,7 +5766,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Total:'
+  m_text: 0/5
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -10251,7 +10255,6 @@ MonoBehaviour:
   - {fileID: 149830499}
   - {fileID: 259839583}
   - {fileID: 2096185235}
-  _navData: {fileID: 0}
   _switches: []
   _startPoint: {x: 11.09, y: -6.86, z: 2.95}
   _endPoint: {fileID: 1357798450}
