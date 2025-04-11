@@ -135,8 +135,13 @@ namespace Assets.Enemy.Scripts
             currentWave = null;
             _controller._isWaveInProgress = false;
             _controller._waveNumber++;
+            int canUpgradeSystem = _controller._waveNumber % 3;
 
-            globalUpgradesButtons.SetActive(true);
+            if (canUpgradeSystem == 0)
+            {
+                globalUpgradesButtons.SetActive(true);
+            }
+
         }
     }
 }
