@@ -137,6 +137,7 @@ MonoBehaviour:
   ProjMotion: 0
   projMotionLaunchAngle: 45
   customBehaviour: 
+  normTowerValue: 100
   TowerValue: 100
   Range: 10
 --- !u!135 &5215579249958660669

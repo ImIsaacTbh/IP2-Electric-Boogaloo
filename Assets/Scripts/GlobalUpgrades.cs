@@ -7,6 +7,7 @@ public class GlobalUpgrades : MonoBehaviour
 {
     private GlobalController _controller;
     public static GlobalUpgrades instance = null;
+    public GameObject globalUpgradesButtons;
     public TextMeshProUGUI asiTotaltext;
     public TextMeshProUGUI tcrTotaltext;
     public TextMeshProUGUI esrTotaltext;
@@ -17,6 +18,7 @@ public class GlobalUpgrades : MonoBehaviour
     public float asiPercentage;
     public float tcrPercentage;
     public float esrPercentage;
+    public int tcrTotal = 0;
     void Start()
     {
         _controller = GlobalController.instance;
@@ -27,36 +29,70 @@ public class GlobalUpgrades : MonoBehaviour
     }
     public void AttackSpeedIncrease()
     {
-        int total = attackSpeedIncrease / 10;
-        if (total < 5)
-        {
-            attackSpeedIncrease += 10;
+        attackSpeedIncrease += 10;
+        int asiTotal = attackSpeedIncrease / 10;
 
-            asiTotaltext.text = total.ToString() + "/5";
+        if (asiTotal <= 5)
+        {
+            asiTotaltext.text = asiTotal.ToString() + "/5";
             asiPercentage = attackSpeedIncrease / 100f;
         }
-
-
+        else
+        {
+            print("already maxed");
+        }
+        globalUpgradesButtons.SetActive(false);
     }
 
     public void TowerCostReduce()
     {
         towerCostReduction -= 10;
-        int total = (towerCostReduction / 10) * -1;
+        tcrTotal = (towerCostReduction / 10) * -1;
 
-        tcrTotaltext.text = total.ToString() + "/5";
-        tcrPercentage = towerCostReduction / 100f;
+        if (tcrTotal <= 5)
+        {
+            tcrTotaltext.text = tcrTotal.ToString() + "/5";
+            tcrPercentage = towerCostReduction / 100f;
+        }
+        else
+        {
+            print("already maxed");
+        }
+
+        if (tcrTotal > 1)
+        {
+            for (int i = 0; i < TowerSelector.instance.towers.Length; i++)
+            {
+                TowerSelector.instance.towers[i].GetComponent<TowerFunction>().TowerValue = TowerSelector.instance.towers[i].GetComponent<TowerFunction>().normTowerValue;
+            }
+        }
+
+        for (int i = 0; i < TowerSelector.instance.towers.Length; i++)
+        {
+            TowerSelector.instance.towers[i].GetComponent<TowerFunction>().TowerValue += (TowerSelector.instance.towers[i].GetComponent<TowerFunction>().TowerValue * tcrPercentage);
+        }
+        globalUpgradesButtons.SetActive(false);
     }
 
     public void EnemySpeedReduce()
     {
         enemySpeedReduction -= 10;
-        int total = (enemySpeedReduction / 10) * -1;
+        int esrTotal = (enemySpeedReduction / 10) * -1;
 
-        esrTotaltext.text = total.ToString() + "/5";
+        if (esrTotal <= 5)
+        {
+            esrTotaltext.text = esrTotal.ToString() + "/5";
 
-        esrPercentage = enemySpeedReduction / 100f;
-        GlobalController.instance._enemyTickRate += GlobalController.instance._enemyTickRate * esrPercentage;
-        
+            esrPercentage = enemySpeedReduction / 100f;
+
+            GlobalController.instance._enemyTickRate = 30;
+            GlobalController.instance._enemyTickRate += GlobalController.instance._enemyTickRate * esrPercentage;
+        }
+        else
+        {
+            print("already maxed");
+        }
+
+        globalUpgradesButtons.SetActive(false);
     }
 }

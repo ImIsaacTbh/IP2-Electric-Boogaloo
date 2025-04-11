@@ -17,9 +17,9 @@ public class TowerSelector : MonoBehaviour
     public GameObject notEnoughCoins;
     public GameObject cannotPlace;
     public TextMeshPro coinsText;
-    public float coins;
     public bool canSpawn;
-
+    public float coins;
+    public float tempTowerValue = 0;
 
     public void Start()
     {
@@ -28,6 +28,11 @@ public class TowerSelector : MonoBehaviour
             instance = this;
         }
         floorScript = floor.GetComponent<TowerSpawning>();
+
+        for (int i = 0; i < towers.Length; i++)
+        {
+            towers[i].GetComponent<TowerFunction>().TowerValue = towers[i].GetComponent<TowerFunction>().normTowerValue;
+        }
     }
     private void Update()
     {
@@ -71,6 +76,7 @@ public class TowerSelector : MonoBehaviour
                 print("No tower selected");
                 break;
         }
+
         if (coins >= activeTower.GetComponent<TowerFunction>().TowerValue && SceneManager.GetActiveScene().name != "ProdSceneButterNewMap")
         {
             spawnMode = true;

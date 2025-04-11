@@ -26,11 +26,11 @@ public class TowerFunction : MonoBehaviour
     public bool ProjMotion;
     public float projMotionLaunchAngle;
     public string customBehaviour;
-    public int TowerValue;
+    public float normTowerValue;
+    public float TowerValue;
     public float Range = 5f;
 
     private Vector3 projSpawnPos;
-    // Start is called before the first frame update
     void Start()
     {
         instance = GlobalController.instance;

@@ -138,6 +138,8 @@ MonoBehaviour:
   projMotionLaunchAngle: 45
   customBehaviour: 
   TowerValue: 250
+  normTowerValue: 250
+  Range: 5
 --- !u!135 &5697023331068519821
 SphereCollider:
   m_ObjectHideFlags: 0
