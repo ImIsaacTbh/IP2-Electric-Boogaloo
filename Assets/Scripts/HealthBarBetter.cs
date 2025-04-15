@@ -7,7 +7,9 @@ public class HealthBarBetter : MonoBehaviour
 {
     public Image image;
     public Image imageMask;
+#pragma warning disable CS0649
     private Camera cam;
+#pragma warning restore CS0649
 
     private float target = 1f;
 
@@ -27,7 +29,7 @@ public class HealthBarBetter : MonoBehaviour
 
     private void Start()
     {
-
+        controller = GlobalController.instance;
         image.color = gradient.Evaluate(target); //sets the  image fill colour to the value on the gradient
         
     }
