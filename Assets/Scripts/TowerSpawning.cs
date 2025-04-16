@@ -19,6 +19,7 @@ public class TowerSpawning : MonoBehaviour
     }
     public void TowerPlace()
     {
+        print("entered towerplace");
         if (TowerSelector.instance.spawnMode && TowerSelector.instance.canSpawn && SceneManager.GetActiveScene().name != "ProdSceneButterNewMap")
         {
             TowerSelector.instance.coins -= TowerSelector.instance.activeTower.GetComponent<TowerFunction>().TowerValue;
@@ -45,13 +46,16 @@ public class TowerSpawning : MonoBehaviour
             bool cast = Physics.Raycast(dropRay.origin, dropRay.direction, out var hit, 9999, 1 << 10);
             var succHit = hit.point;
             succHit.y += 1.1225f;
-
+            print("trying to spawn");
             var turret = Instantiate(TowerSelector.instance.activeTower, succHit, transform.rotation);
             turret.transform.localScale *= 0.5f;
             turret.tag = "ActiveTower";
+            print("got to here");
             turret.GetComponent<LineRenderer>().enabled = false;
             TowerManager.instance.activeTowers.Add(turret);
+            print("so close0");
             TowerSelector.instance.spawnMode = false;
+            print("yipeeeee");
             
         }
         else

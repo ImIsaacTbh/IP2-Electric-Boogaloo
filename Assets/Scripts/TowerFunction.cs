@@ -31,7 +31,7 @@ public class TowerFunction : MonoBehaviour
     public string customBehaviour;
     public float normTowerValue;
     public float firerate = 1f;
-    public int TowerValue;
+    public float TowerValue;
     public float Damage;
     public float Range = 25f;
 

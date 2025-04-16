@@ -14,6 +14,7 @@ namespace Assets
         public List<GameObject> _enemiesInPlay = new List<GameObject>();
         public float _timeSinceLastEnemyTick = 0f;
         public float _timeSinceLastEnemySpawn = 0f;
+        public GameObject globalUpgradesButtons;
 
         void Awake()
         {
@@ -42,6 +43,12 @@ namespace Assets
             {
                 _controller._waveNumber++;
                 _controller._isWaveInProgress = false;
+                int canUpgradeSystem = _controller._waveNumber % 3;
+
+                if (canUpgradeSystem == 0)
+                {
+                    globalUpgradesButtons.SetActive(true);
+                }
             }
         }
 
