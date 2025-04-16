@@ -152,14 +152,6 @@ public class TowerFunction : MonoBehaviour
     }
 }
 
-public class LookForward : MonoBehaviour
-{
-    private void Update()
-    {
-        transform.rotation = Quaternion.LookRotation(GetComponent<Rigidbody>().velocity);
-    }
-}
-
 public class ProjBullet : MonoBehaviour
 {
     public float AOE = 100f;
@@ -172,12 +164,19 @@ public class ProjBullet : MonoBehaviour
     
     private void Awake()
     {
+        StartCoroutine(destroyaftertime());
         startPos = sender.gameObject.transform.position;
         //this will get the position of the cursor and set the targetPos as that
         var dropRay = Camera.main.ScreenPointToRay(Input.mousePosition);
         bool cast = Physics.Raycast(dropRay.origin, dropRay.direction, out var hit, 9999, 1 << 6);
         var succHit = hit.point;
         targetPos = new Vector3(succHit.x, succHit.y + 1.1225f, succHit.z);
+    }
+
+    private IEnumerator destroyaftertime()
+    {
+        yield return new WaitForSeconds(3f);
+        Destroy(this.gameObject);
     }
     
     private float elapsedTime = 0f;
@@ -220,6 +219,37 @@ public class ProjBullet : MonoBehaviour
             Destroy(this.gameObject);
         }
         
+    }
+
+    void OnCollisionEnter(Collision c)
+    {
+        try
+        {
+            if (c.collider.tag.Contains("Enemy") && c.collider.tag != "EnemyKillVolume")
+            {
+                Enemy t = c.collider.gameObject.GetComponent<Enemy>();
+
+                t.Health -= sender.Damage;
+                if (t.Health < 0)
+                {
+                    TowerSelector.instance.coins += t.Cost;
+                    Destroy(c.gameObject);
+                }
+                Destroy(this.gameObject);
+            }
+        }
+        catch (MissingReferenceException ex)
+        {
+            Destroy(this.gameObject);
+        }
+    }
+}
+
+public class LookForward : MonoBehaviour
+{
+    private void Update()
+    {
+        transform.rotation = Quaternion.LookRotation(GetComponent<Rigidbody>().velocity);
     }
 }
 

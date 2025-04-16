@@ -77,7 +77,7 @@ public class TowerSelector : MonoBehaviour
             spawnMode = true;
             print(activeTower.gameObject.name);
             previewTower = Instantiate(activeTower, floorScript.worldPosition, transform.rotation);
-            previewTower.transform.Rotate(-28, 0, 0);
+            //previewTower.transform.Rotate(-28, 0, 0);
             previewTower.tag = "PreviewTower";
             previewTower.GetComponent<TowerFunction>().enabled = false;
         }
@@ -86,7 +86,7 @@ public class TowerSelector : MonoBehaviour
             spawnMode = true;
             print(activeTower.gameObject.name);
             previewTower = Instantiate(activeTower);
-            previewTower.transform.Rotate(-28, 0, 0);
+            //previewTower.transform.Rotate(-28, 0, 0);
             previewTower.transform.localScale *= 0.5f;
             previewTower.tag = "PreviewTower";
             previewTower.GetComponent<TowerFunction>().enabled = false;
