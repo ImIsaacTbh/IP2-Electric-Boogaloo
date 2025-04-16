@@ -12,6 +12,7 @@ public class PauseMenu : MonoBehaviour
 
     public static PauseMenu instance;
 
+
     void Start()
     {
         instance = this;
@@ -28,7 +29,14 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
-    public void PauseUnPause()
+    public void RestartCurrentScene()
+    {
+        // Get the active scene and reload it
+        Scene currentScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(currentScene.name);
+    }
+
+public void PauseUnPause()
     {
         if (_controller._isGamePaused)
         {

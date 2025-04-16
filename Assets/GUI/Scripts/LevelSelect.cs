@@ -5,10 +5,18 @@ using UnityEngine.SceneManagement;
 
 public class LevelSelect : MonoBehaviour
 {
+    private const string mainMenuName = "MainMenu";
     void Start()
     {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+    }
+
+    public void MainMenu()
+    {
+        Debug.Log("did thing");
+        //loads main menu scene
+        SceneManager.LoadScene(mainMenuName);
     }
     // public void Level1()
     // {
