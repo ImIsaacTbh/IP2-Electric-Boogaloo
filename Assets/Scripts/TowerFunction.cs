@@ -5,6 +5,7 @@ using System.Linq;
 using Assets;
 using Assets.Enemy.Scripts;
 using Assets.Enemy.Scripts.EnemyExample;
+using Unity.AI.Navigation;
 using UnityEditor.IMGUI.Controls;
 using UnityEngine;
 using UnityEngine.AI;
@@ -81,7 +82,8 @@ public class TowerFunction : MonoBehaviour
                 {
 #warning make mortar
                     GameObject proj = Instantiate(projectile);
-                    proj.AddComponent<ProjBullet>();
+                    proj.transform.localScale *= 3f;
+                    proj.AddComponent<ProjBullet>().sender = this;
                     proj.SetActive(true);
                 }
                 else
@@ -168,46 +170,32 @@ public class ProjBullet : MonoBehaviour
     public float arcHeight = 1f;
     public float speed = 10f;
     
-    private void Start()
+    private void Awake()
     {
-        startPos = transform.position;
-        var r = Camera.main.ScreenPointToRay(Input.mousePosition);
-        Physics.Raycast(r, out RaycastHit hit, 99999f, 1 << 6);
-        targetPos = hit.point;
+        startPos = sender.gameObject.transform.position;
+        //this will get the position of the cursor and set the targetPos as that
+        var dropRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+        bool cast = Physics.Raycast(dropRay.origin, dropRay.direction, out var hit, 9999, 1 << 6);
+        var succHit = hit.point;
+        targetPos = new Vector3(succHit.x, succHit.y + 1.1225f, succHit.z);
     }
+    
+    private float elapsedTime = 0f;
 
     private void Update()
     {
-        float x0 = startPos.x;
-        float x1 = targetPos.x;
-        float dist = x1 - x0;
-        float nextX = Mathf.MoveTowards(transform.position.x, x1, speed * Time.deltaTime);
-        float baseY = Mathf.Lerp(startPos.y, targetPos.y, (nextX - x0) / dist);
-        float arc = arcHeight * (nextX - x0) * (nextX - x1) / (-0.25f * dist * dist);
-        var nextPos = new Vector3(nextX, baseY + arc, transform.position.z);
-		
-        // Rotate to face the next position, and then move there
-        transform.LookAt(nextPos - transform.position);
+        elapsedTime += Time.deltaTime;
+
+        float t = elapsedTime * speed / (targetPos - startPos).magnitude;
+        t = Mathf.Clamp01(t);
+
+        Vector3 linearPos = Vector3.Lerp(startPos, targetPos, t);
+        float arcOffset = arcHeight * Mathf.Sin(t * Mathf.PI);
+
+        Vector3 nextPos = new Vector3(linearPos.x, linearPos.y + arcOffset, linearPos.z);
+
+        transform.LookAt(nextPos - transform.position); 
         transform.position = nextPos;
-		
-        // Do something when we reach the target
-        if (nextPos == targetPos)
-        {
-            foreach (GameObject g in EnemyController.instance._enemiesInPlay)
-            {
-                if (Vector3.Distance(g.transform.position, transform.position) <= AOE)
-                {
-                    Enemy t = g.GetComponent<Enemy>();
-                    t.Health -= sender.Damage;
-                    if (t.Health < 0)
-                    {
-                        TowerSelector.instance.coins += t.Cost;
-                        Destroy(g.gameObject);
-                    }
-                    Destroy(this.gameObject);
-                }
-            }
-        }
     }
 
     void OnTriggerEnter(Collider c)
