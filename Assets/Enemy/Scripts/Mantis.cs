@@ -12,14 +12,14 @@ namespace Assets.Enemy.Scripts.EnemyExample
     {
         public override string Name { get; set; } = "Mantis";
         public override float Health { get; set; } = 125f;
-        public override int Cost { get; set; } = 1;
+        public override int Cost { get; set; } = 10;
         public override float Damage { get; set; } = 5;
         public override float Range { get; set; } = 0;
         public override float AttackSpeed { get; set; } = 0;
         public override float MovementSpeed { get; set; } = 4.5f;
-        
+#pragma warning disable CS0414
         private int currentCp = 1;
-
+#pragma warning restore CS0414
         public Mantis(float healthMult, float damageMult)
         {
             Health *= healthMult;
@@ -28,6 +28,8 @@ namespace Assets.Enemy.Scripts.EnemyExample
 
         public void Awake()
         {
+            Cost = 10;
+            Health = 125f;
             _controller = GlobalController.instance;
             _controller.Events.EnemyTick += OnEnemyTick;
             _controller.Events.Pause += DoPause;
@@ -42,8 +44,9 @@ namespace Assets.Enemy.Scripts.EnemyExample
         {
 
         }
-
+#pragma warning disable CS0108
         public void OnEnemyTick(object sender, EventArgs e)
+#pragma warning restore CS0108
         {
             Debug.Log("Ticked Enemy");
         }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -27,12 +28,11 @@ public class LoadingScreen_1 : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine(LoadingSomeLevel());
+        // StartCoroutine(LoadingSomeLevel());
     }
 
     void Update()
     {
-        ShowLoadingScreen();
     }
 
     void MakeSingleton()
@@ -50,30 +50,20 @@ public class LoadingScreen_1 : MonoBehaviour
 
     public void LoadLevel(string sceneName)
     {
-        loading_Bar_Holder.SetActive(true);
         progress_Value = 0f;
-        SceneManager.LoadScene(sceneName);
+        loading_Bar_Holder.SetActive(true);
+        StartCoroutine(loadingUI(sceneName));
     }
 
-    void ShowLoadingScreen()
+    IEnumerator loadingUI(string sceneName)
     {
-        if (progress_Value < 1f)
+        while (progress_Value < 1f)
         {
-            progress_Value += progress_Multiplier_1 * progress_Multiplier_2 * Time.unscaledDeltaTime;
+            progress_Value += Time.deltaTime * progress_Multiplier_1;
             loading_Bar_Progress.fillAmount = progress_Value;
-
-            if (progress_Value >= 1f)
-            {
-                progress_Value = 1.1f;
-                loading_Bar_Progress.fillAmount = 0f;
-                loading_Bar_Holder.SetActive(false);
-            }
+            yield return new WaitForEndOfFrame();
         }
-    }
-
-    IEnumerator LoadingSomeLevel()
-    {
-        yield return new WaitForSeconds(load_level_Time);
-        LoadLevel("PresentScnee");
+        SceneManager.LoadScene(sceneName);
+        loading_Bar_Holder.SetActive(false);
     }
 }

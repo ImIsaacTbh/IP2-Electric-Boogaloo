@@ -1,4 +1,6 @@
 using Assets.Enemy.Scripts;
+using Assets.Enemy.Scripts.EnemyExample;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
@@ -18,11 +20,11 @@ public class EnemyDamage : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
-            _controller.DecreaseHealth(_controller.enemyDamage);
+            _controller.DecreaseHealth((new EnemyBase(1, 1)).Damage);
         }
         if (other.CompareTag("Enemyfast"))
-        {
-            _controller.DecreaseHealth(_controller.enemyFastDamage);
+        { 
+            _controller.DecreaseHealth((new Mantis(1, 1)).Damage);
 
         }
         if (other.CompareTag("Enemyslow"))

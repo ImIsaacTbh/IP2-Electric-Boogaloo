@@ -12,21 +12,29 @@ namespace Assets.Enemy.Scripts.EnemyExample
     {
         public override string Name { get; set; } = "ExampleEnemy";
         public override float Health { get; set; } = 100;
-        public override int Cost { get; set; } = 1;
+        public override int Cost { get; set; } = 5;
         public override float Damage { get; set; } = 5;
         public override float Range { get; set; } = 0;
         public override float AttackSpeed { get; set; } = 0;
         public override float MovementSpeed { get; set; } = 3.5f;
+        [SerializeField]
+#pragma warning disable CS0414
         private int currentCp = 1;
+#pragma warning restore CS0414
 
         public EnemyBase(float healthMult, float damageMult)
         {
+            Name = "ExampleEnemy";
+            Cost = 4;
+            
             Health *= healthMult;
             Damage = (int)(Damage * damageMult);
         }
 
         public void Awake()
         {
+            Cost = 5;
+            Health = 100f;
             _controller = GlobalController.instance;
             _controller.Events.EnemyTick += OnEnemyTick;
             _controller.Events.Pause += DoPause;
@@ -40,8 +48,9 @@ namespace Assets.Enemy.Scripts.EnemyExample
         {
 
         }
-
+#pragma warning disable CS0108
         public void OnEnemyTick(object sender, EventArgs e)
+#pragma warning restore CS0108
         {
             Debug.Log("Ticked Enemy");
         }

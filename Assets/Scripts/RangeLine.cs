@@ -6,7 +6,7 @@ public class RangeLine : MonoBehaviour
 {
     public static RangeLine instance;
     public int subdivisions = 50;
-    public float radius = 5f;
+    public float radius;
     public LineRenderer towerLineRenderer;
     public Material m_normal, m_red;
 
@@ -16,7 +16,7 @@ public class RangeLine : MonoBehaviour
         {
             instance = this;
         }
-
+        radius = this.GetComponent<TowerFunction>().Range;
         towerLineRenderer = GameObject.FindGameObjectWithTag("PreviewTower").GetComponent<LineRenderer>();
         towerLineRenderer.material.color = Color.white;
     }
@@ -25,16 +25,19 @@ public class RangeLine : MonoBehaviour
     {
         float angleStep = 2f * Mathf.PI / subdivisions;
 
-        towerLineRenderer.positionCount = subdivisions;
-
-        for (int i = 0; i < subdivisions; i++)
+        if (towerLineRenderer != null)
         {
-            float xPosition = radius * Mathf.Cos(angleStep * i);
-            float zPosition = radius * Mathf.Sin(angleStep * i);
+            towerLineRenderer.positionCount = subdivisions;
 
-            Vector3 pointInCircle = new Vector3(xPosition, 0f, zPosition);
+            for (int i = 0; i < subdivisions; i++)
+            {
+                float xPosition = radius * Mathf.Cos(angleStep * i);
+                float zPosition = radius * Mathf.Sin(angleStep * i);
 
-            towerLineRenderer.SetPosition(i, pointInCircle);
+                Vector3 pointInCircle = new Vector3(xPosition, 0f, zPosition);
+
+                towerLineRenderer.SetPosition(i, pointInCircle);
+            }
         }
     }
 }
