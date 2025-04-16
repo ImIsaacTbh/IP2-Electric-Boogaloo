@@ -33,7 +33,7 @@ namespace Assets.Enemy.Scripts
 
         public void Spawn(GameObject gooberPrefab)
         {
-            GameObject goober = Instantiate(gooberPrefab, transform.position, Quaternion.identity);
+            GameObject goober = Instantiate(gooberPrefab, transform.position, transform.rotation);
             EnemyController.instance._enemiesInPlay.Add(goober);
         }
     }

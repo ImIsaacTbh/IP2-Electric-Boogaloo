@@ -31,7 +31,7 @@ public class TowerFunction : MonoBehaviour
     public float firerate = 1f;
     public int TowerValue;
     public float Damage;
-    public float Range = 5f;
+    public float Range = 25f;
 
     private Vector3 projSpawnPos;
     // Start is called before the first frame update
@@ -80,26 +80,8 @@ public class TowerFunction : MonoBehaviour
                 if (ProjMotion)
                 {
 #warning make mortar
-                    print("firing bullet");
                     GameObject proj = Instantiate(projectile);
-                    proj.transform.position = projSpawnPos;
-                    proj.layer = 8;
-                    Rigidbody rb = proj.GetComponentInChildren<Rigidbody>();
-                    Vector3 target = closest.Key.transform.position;
-                    
-                    Vector3 direction = target - projSpawnPos;
-                    float h = direction.y;
-                    direction.y = 0;
-                    float distance = direction.magnitude;
-                    float a = projMotionLaunchAngle * Mathf.Deg2Rad;
-                    direction.y = distance * Mathf.Tan(a);
-                    distance += h / Mathf.Tan(a);
-
-                    // Calculate the velocity
-                    float velocity = Mathf.Sqrt(distance * Physics.gravity.magnitude / Mathf.Sin(2 * a));
-                    rb.velocity = velocity * direction.normalized;
-
-                    proj.AddComponent<LookForward>();
+                    proj.AddComponent<ProjBullet>();
                     proj.SetActive(true);
                 }
                 else
@@ -125,27 +107,12 @@ public class TowerFunction : MonoBehaviour
             closest = list.First();
             if (ProjMotion)
             {
-                print("firing bullet");
+                //this will be a mortar style of shell that will land whereever the user's mouse is on the map
                 GameObject proj = Instantiate(projectile);
-                proj.transform.position = projSpawnPos;
-                proj.layer = 8;
-                Rigidbody rb = proj.GetComponentInChildren<Rigidbody>();
-                Vector3 target = closest.transform.position;
-
-                Vector3 direction = target - projSpawnPos;
-                float h = direction.y;
-                direction.y = 0;
-                float distance = direction.magnitude;
-                float a = projMotionLaunchAngle * Mathf.Deg2Rad;
-                direction.y = distance * Mathf.Tan(a);
-                distance += h / Mathf.Tan(a);
-
-                // Calculate the velocity
-                float velocity = Mathf.Sqrt(distance * Physics.gravity.magnitude / Mathf.Sin(2 * a));
-                rb.velocity = velocity * direction.normalized;
-
-                proj.AddComponent<LookForward>();
+                proj.AddComponent<ProjBullet>().sender = this;
                 proj.SetActive(true);
+                
+                
             }
             else
             {
@@ -188,6 +155,83 @@ public class LookForward : MonoBehaviour
     private void Update()
     {
         transform.rotation = Quaternion.LookRotation(GetComponent<Rigidbody>().velocity);
+    }
+}
+
+public class ProjBullet : MonoBehaviour
+{
+    public float AOE = 100f;
+    public TowerFunction sender;
+    public Vector3 startPos;
+    public Vector3 targetPos;
+
+    public float arcHeight = 1f;
+    public float speed = 10f;
+    
+    private void Start()
+    {
+        startPos = transform.position;
+        var r = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Physics.Raycast(r, out RaycastHit hit, 99999f, 1 << 6);
+        targetPos = hit.point;
+    }
+
+    private void Update()
+    {
+        float x0 = startPos.x;
+        float x1 = targetPos.x;
+        float dist = x1 - x0;
+        float nextX = Mathf.MoveTowards(transform.position.x, x1, speed * Time.deltaTime);
+        float baseY = Mathf.Lerp(startPos.y, targetPos.y, (nextX - x0) / dist);
+        float arc = arcHeight * (nextX - x0) * (nextX - x1) / (-0.25f * dist * dist);
+        var nextPos = new Vector3(nextX, baseY + arc, transform.position.z);
+		
+        // Rotate to face the next position, and then move there
+        transform.LookAt(nextPos - transform.position);
+        transform.position = nextPos;
+		
+        // Do something when we reach the target
+        if (nextPos == targetPos)
+        {
+            foreach (GameObject g in EnemyController.instance._enemiesInPlay)
+            {
+                if (Vector3.Distance(g.transform.position, transform.position) <= AOE)
+                {
+                    Enemy t = g.GetComponent<Enemy>();
+                    t.Health -= sender.Damage;
+                    if (t.Health < 0)
+                    {
+                        TowerSelector.instance.coins += t.Cost;
+                        Destroy(g.gameObject);
+                    }
+                    Destroy(this.gameObject);
+                }
+            }
+        }
+    }
+
+    void OnTriggerEnter(Collider c)
+    {
+        try
+        {
+            if (c.tag.Contains("Enemy") && c.tag != "EnemyKillVolume")
+            {
+                Enemy t = c.GetComponent<Enemy>();
+
+                t.Health -= sender.Damage;
+                if (t.Health < 0)
+                {
+                    TowerSelector.instance.coins += t.Cost;
+                    Destroy(c.gameObject);
+                }
+                Destroy(this.gameObject);
+            }
+        }
+        catch (MissingReferenceException ex)
+        {
+            Destroy(this.gameObject);
+        }
+        
     }
 }
 

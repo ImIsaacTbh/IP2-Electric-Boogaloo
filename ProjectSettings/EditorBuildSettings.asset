@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/LevelSelectLoadingScreen.unity
     guid: 673c8a0ae2f3789408393026c0d353a1
   - enabled: 1
+    path: Assets/Scenes/ProdSceneButterNewMapNathanTest.unity
+    guid: d94fceaf05c82ed48ab90624c88d60ff
+  - enabled: 1
     path: Assets/Scenes/ProdSceneButter.unity
     guid: bc9cea2ec2576034fb74c605c897b09f
   - enabled: 0
@@ -21,6 +24,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Settings.unity
     guid: 8b661d48434ae3e4aa8cac0a57367cbb
   - enabled: 1
-    path: Assets/Scenes/ProdSceneButterNewMapNathanTest.unity
-    guid: d94fceaf05c82ed48ab90624c88d60ff
+    path: Assets/Scenes/ProdSceneButterNewMap.unity
+    guid: ed876e20efedffa428173ee415e870c7
   m_configObjects: {}

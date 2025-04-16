@@ -32,7 +32,7 @@ Transform:
   m_GameObject: {fileID: 509196352489567619}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 22.287546, y: 0.034830093, z: 21.87048}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2.1225, y: 2.1225, z: 2.1225}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -134,13 +134,13 @@ MonoBehaviour:
   mode: 0
   projectile: {fileID: 7970750869549982664, guid: 0bad53d20f6d55d4bb8cde706b8a5cdc,
     type: 3}
-  ProjMotion: 0
+  ProjMotion: 1
   projMotionLaunchAngle: 45
   customBehaviour: 
   firerate: 2
   TowerValue: 250
   Damage: 60
-  Range: 5
+  Range: 25
 --- !u!135 &5697023331068519821
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -497,7 +497,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 210eeb0829599c04cb41fd3886ee04b4,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.19
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 210eeb0829599c04cb41fd3886ee04b4,
         type: 3}

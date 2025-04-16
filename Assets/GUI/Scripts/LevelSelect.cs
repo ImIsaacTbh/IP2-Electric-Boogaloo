@@ -10,21 +10,21 @@ public class LevelSelect : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
-    public void Level1()
-    {
-        //opens level1
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-    }
-
-    public void Level2()
-    {
-        //openslevel2
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 2);
-    }
-
-    public void Home()
-    {
-        //back to main menu
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex -1);
-    }
+    // public void Level1()
+    // {
+    //     //opens level1
+    //     SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    // }
+    //
+    // public void Level2()
+    // {
+    //     //openslevel2
+    //     SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 2);
+    // }
+    //
+    // public void Home()
+    // {
+    //     //back to main menu
+    //     SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex -1);
+    // }
 }
