@@ -4250,6 +4250,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 001a1baa0d32efc40a2093b2d4a97328, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TowerSelectionUI: {fileID: 0}
+  isTowerSelectionOpen: 0
 --- !u!114 &843465236
 MonoBehaviour:
   m_ObjectHideFlags: 0
