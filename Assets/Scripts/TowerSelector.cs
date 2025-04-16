@@ -12,7 +12,7 @@ public class TowerSelector : MonoBehaviour
     public GameObject[] towers;
     public GameObject activeTower;
     public GameObject previewTower;
-    public GameObject floor;
+    public TowerSpawning floor;
     private TowerSpawning floorScript;
     public GameObject notEnoughCoins;
     public GameObject cannotPlace;
@@ -27,7 +27,8 @@ public class TowerSelector : MonoBehaviour
         {
             instance = this;
         }
-        floorScript = floor.GetComponent<TowerSpawning>();
+
+        floorScript = floor;
     }
     private void Update()
     {
@@ -84,7 +85,7 @@ public class TowerSelector : MonoBehaviour
         {
             spawnMode = true;
             print(activeTower.gameObject.name);
-            previewTower = Instantiate(activeTower, floorScript.worldPosition, transform.rotation);
+            previewTower = Instantiate(activeTower);
             previewTower.transform.Rotate(-28, 0, 0);
             previewTower.transform.localScale *= 0.5f;
             previewTower.tag = "PreviewTower";
