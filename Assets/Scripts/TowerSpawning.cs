@@ -7,17 +7,21 @@ using UnityEngine.SceneManagement;
 public class TowerSpawning : MonoBehaviour
 {
     public GameObject towerSelection;
+    public static TowerSpawning instance = null;
     public Vector3 mousePos;
     public Vector3 worldPosition;
-
+    public void Start()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
     public void TowerPlace()
     {
         if (TowerSelector.instance.spawnMode && TowerSelector.instance.canSpawn && SceneManager.GetActiveScene().name != "ProdSceneButterNewMap")
         {
-            int towerCost = TowerSelector.instance.previewTower.GetComponent<TowerFunction>().TowerValue;
-            float newTowerCost = towerCost;
-            newTowerCost += towerCost * GlobalUpgrades.instance.tcrPercentage;
-            TowerSelector.instance.coins -= newTowerCost;
+            TowerSelector.instance.coins -= TowerSelector.instance.activeTower.GetComponent<TowerFunction>().TowerValue;
 
             Destroy(TowerSelector.instance.previewTower);
             var dropRay = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -34,8 +38,7 @@ public class TowerSpawning : MonoBehaviour
         }
         else if (TowerSelector.instance.spawnMode && TowerSelector.instance.canSpawn)
         {
-            int towerCost = TowerSelector.instance.previewTower.GetComponent<TowerFunction>().TowerValue;
-            TowerSelector.instance.coins -= towerCost;
+            TowerSelector.instance.coins -= TowerSelector.instance.activeTower.GetComponent<TowerFunction>().TowerValue;
 
             Destroy(TowerSelector.instance.previewTower);
             var dropRay = Camera.main.ScreenPointToRay(Input.mousePosition);

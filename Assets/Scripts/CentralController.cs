@@ -46,6 +46,9 @@ public class GlobalController : MonoBehaviour
 
     public float _globalEnemySpawnRate = 0.5f;
 
+    [Header("Global Upgrades")]
+    public GameObject globalUpgradesButtons;
+
     //public  HealthBarBetter healthBarBetter;
     //Tracking variables
     public static float _timeSinceLastCentralTick;

@@ -13,6 +13,7 @@ public class TowerManager : MonoBehaviour
 
     void Awake()
     {
+
         if(instance == null)
         {
             instance = this;
@@ -21,6 +22,7 @@ public class TowerManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+
         _controller = GlobalController.instance;
         _controller.Events.CentralTick += OnCentralTick;
         _controller.Events.ResetWave += (object sender, EventArgs e) => {

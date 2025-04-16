@@ -220,6 +220,7 @@ MonoBehaviour:
   ProjMotion: 0
   projMotionLaunchAngle: 45
   customBehaviour: 
+  normTowerValue: 100
   firerate: 1
   TowerValue: 100
   Damage: 20

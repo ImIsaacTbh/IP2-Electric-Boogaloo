@@ -31,6 +31,7 @@ namespace Assets.Enemy.Scripts
         public GlobalController _controller;
         public static WaveManager instance = null;
         public List<GameObject> enemyPrefabs;
+        public GameObject globalUpgradesButtons;
 
         public List<Wave> waves = new List<Wave>();
         
@@ -134,6 +135,13 @@ namespace Assets.Enemy.Scripts
             currentWave = null;
             _controller._isWaveInProgress = false;
             _controller._waveNumber++;
+            int canUpgradeSystem = _controller._waveNumber % 3;
+
+            if (canUpgradeSystem == 0)
+            {
+                globalUpgradesButtons.SetActive(true);
+            }
+
         }
     }
 }
