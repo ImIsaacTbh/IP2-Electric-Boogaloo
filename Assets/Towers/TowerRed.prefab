@@ -221,9 +221,9 @@ MonoBehaviour:
   projMotionLaunchAngle: 45
   customBehaviour: 
   normTowerValue: 100
-  firerate: 1
+  firerate: 1.5
   TowerValue: 100
-  Damage: 20
+  Damage: 35
   Range: 10
 --- !u!135 &5215579249958660669
 SphereCollider:

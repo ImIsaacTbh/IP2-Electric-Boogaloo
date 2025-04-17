@@ -4,9 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Assets;
 using Assets.Enemy.Scripts;
-using Assets.Enemy.Scripts.EnemyExample;
-using Unity.AI.Navigation;
-using UnityEditor.IMGUI.Controls;
 using UnityEngine;
 using UnityEngine.AI;
 

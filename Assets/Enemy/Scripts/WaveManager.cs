@@ -92,7 +92,60 @@ namespace Assets.Enemy.Scripts
                         enemyPrefab = enemyPrefabs[0],
                         count = 16
                     }
-                }, 1f)
+                }, 1f),
+                new Wave(new List<EnemyBunch>()
+                {
+                    new EnemyBunch
+                    {
+                        enemyPrefab = enemyPrefabs[1],
+                        count = 4
+                    },
+                    new EnemyBunch
+                    {
+                        enemyPrefab = enemyPrefabs[0],
+                        count = 8
+                    }
+                }, 1f),
+                new Wave(new List<EnemyBunch>()
+                {
+                    new EnemyBunch
+                    {
+                        enemyPrefab = enemyPrefabs[1],
+                        count = 8
+                    },
+                    new EnemyBunch
+                    {
+                        enemyPrefab = enemyPrefabs[0],
+                        count = 16
+                    }
+                }, 1f),
+                new Wave(new List<EnemyBunch>()
+                {
+                    new EnemyBunch
+                    {
+                        enemyPrefab = enemyPrefabs[1],
+                        count = 16
+                    },
+                    new EnemyBunch
+                    {
+                        enemyPrefab = enemyPrefabs[0],
+                        count = 32
+                    }
+                }, 1f),
+                new Wave(new List<EnemyBunch>()
+                {
+                    new EnemyBunch
+                    {
+                        enemyPrefab = enemyPrefabs[1],
+                        count = 32
+                    },
+                    new EnemyBunch
+                    {
+                        enemyPrefab = enemyPrefabs[0],
+                        count = 64
+                    }
+                }, 1f),
+                
             };
 
 

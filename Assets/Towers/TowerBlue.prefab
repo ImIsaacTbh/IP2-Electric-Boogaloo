@@ -310,14 +310,15 @@ MonoBehaviour:
   instance: {fileID: 0}
   inRangeEnemies: []
   mode: 0
-  projectile: {fileID: 7970750869549982664, guid: 0bad53d20f6d55d4bb8cde706b8a5cdc,
-    type: 3}
+  projectile: {fileID: 5559203779869055208}
   ProjMotion: 0
   projMotionLaunchAngle: 45
   customBehaviour: 
-  TowerValue: 150
   normTowerValue: 150
-  Range: 5
+  firerate: 1
+  TowerValue: 150
+  Damage: 15
+  Range: 25
 --- !u!135 &4518427534764748424
 SphereCollider:
   m_ObjectHideFlags: 0
