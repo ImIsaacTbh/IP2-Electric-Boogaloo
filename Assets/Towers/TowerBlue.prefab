@@ -318,7 +318,7 @@ MonoBehaviour:
   firerate: 1
   TowerValue: 150
   Damage: 15
-  Range: 25
+  Range: 7.5
 --- !u!135 &4518427534764748424
 SphereCollider:
   m_ObjectHideFlags: 0

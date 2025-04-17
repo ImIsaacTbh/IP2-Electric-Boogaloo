@@ -138,7 +138,7 @@ MonoBehaviour:
   projMotionLaunchAngle: 45
   customBehaviour: 
   normTowerValue: 250
-  firerate: 2
+  firerate: 5
   TowerValue: 250
   Damage: 75
   Range: 25

@@ -27961,6 +27961,7 @@ GameObject:
   - component: {fileID: 1337744665}
   - component: {fileID: 1337744667}
   - component: {fileID: 1337744666}
+  - component: {fileID: 1337744668}
   m_Layer: 5
   m_Name: CoinsNumber
   m_TagString: Untagged
@@ -28129,6 +28130,18 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &1337744668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1337744662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63f59d99d3e6ead41a7845bfb7c9dc86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1337947897
 GameObject:
   m_ObjectHideFlags: 0
@@ -43056,7 +43069,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 892c3c2ccf7b17d4e8b81886bab26cad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  globalUpgradesButtons: {fileID: 0}
+  globalUpgradesButtons: {fileID: 2085891114}
   asiTotaltext: {fileID: 1528568139}
   tcrTotaltext: {fileID: 2033976863}
   esrTotaltext: {fileID: 2066950193}
