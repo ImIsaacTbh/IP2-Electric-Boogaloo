@@ -7,6 +7,8 @@ using UnityEngine.SceneManagement;
 
 public class TowerSelector : MonoBehaviour
 {
+    public AudioSource audioSource; // Reference to the AudioSource
+    public AudioClip clickSound;    // Reference to the audio clip for clicking
     public static TowerSelector instance;
     public bool spawnMode = false;
     public GameObject[] towers;
@@ -29,7 +31,12 @@ public class TowerSelector : MonoBehaviour
         }
         for (int i = 0; i < towers.Length; i++)
         {
+
             towers[i].GetComponent<TowerFunction>().TowerValue = towers[i].GetComponent<TowerFunction>().normTowerValue;
+        }
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
         }
         floorScript = floor;
     }
@@ -57,6 +64,10 @@ public class TowerSelector : MonoBehaviour
     }
     public void TowerSelect(string tower)
     {
+        if (audioSource != null && clickSound != null)
+        {
+            audioSource.PlayOneShot(clickSound);
+        }
         switch (tower)
         {
             case "red":
@@ -74,6 +85,7 @@ public class TowerSelector : MonoBehaviour
             default:
                 print("No tower selected");
                 break;
+
         }
 
         if (coins >= activeTower.GetComponent<TowerFunction>().TowerValue && SceneManager.GetActiveScene().name != "ProdSceneButterNewMap")

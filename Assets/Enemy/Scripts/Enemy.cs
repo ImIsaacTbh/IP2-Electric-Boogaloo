@@ -12,6 +12,7 @@ namespace Assets.Enemy.Scripts
     {
         public GlobalController _controller = GlobalController.instance;
 
+        private AudioSource _audioSource;
         public abstract string Name { get; set; }
         public abstract int Cost { get; set; }
         public abstract float Health { get; set; }
@@ -24,6 +25,13 @@ namespace Assets.Enemy.Scripts
         public void Start()
         {
             _controller.Events.EnemyTick += OnEnemyTick;
+
+            // Initialize AudioSource
+            _audioSource = GetComponent<AudioSource>();
+            if (_audioSource == null)
+            {
+                _audioSource = gameObject.AddComponent<AudioSource>();
+            }
         }
 
         public void OnEnemyTick(object sender, EventArgs e)
@@ -50,7 +58,14 @@ namespace Assets.Enemy.Scripts
             if (other.CompareTag("EnemyKillVolume"))
             {
 
-                Destroy(this.gameObject);
+                // Play death sound
+                if (_audioSource != null && _audioSource.clip != null)
+                {
+                    _audioSource.Play();
+                }
+
+                // Destroy GameObject after sound finishes playing
+                Destroy(gameObject, _audioSource.clip.length);
                 Console.WriteLine("test");
 
                 _controller.Events.SendEnemyCompletedPath(Cost);
