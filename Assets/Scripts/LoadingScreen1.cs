@@ -44,7 +44,6 @@ public class LoadingScreen_1 : MonoBehaviour
         else
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
         }
     }
 
